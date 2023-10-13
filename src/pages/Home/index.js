@@ -18,8 +18,6 @@ const Home = () => {
    return (
       <View style={styles.container}>
          <View style={styles.content}>
-            <Text style={styles.title}>Home</Text>
-
             <View style={styles.buttonContent}>
 
                <TouchableOpacity style={styles.button}
