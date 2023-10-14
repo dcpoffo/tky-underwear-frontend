@@ -1,9 +1,17 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
 
 import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const Home = () => {
+
+   function handleSignIn(){
+      auth()
+         .signInWithEmailAndPassword('dcpoffo@gmail.com','123456')
+         .then(result => console.log(result))
+         .catch(error => console.log(error))
+   }
 
    const navigation = useNavigation();
 
@@ -30,6 +38,11 @@ const Home = () => {
                   <Text style={styles.buttonText}>Produtos</Text>
 
                </TouchableOpacity>
+
+               <Button
+                  title='Testar Firebase'
+                  onPress={handleSignIn}
+               />
 
             </View>
 
