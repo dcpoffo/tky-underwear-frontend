@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976825540198",
+    "project_id": "tky-underwear-6703b",
+    "storage_bucket": "tky-underwear-6703b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976825540198:android:35b0c04276da03c48957a7",
+        "android_client_info": {
+          "package_name": "com.tkyunderwear"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZZRyAzkXa5WAKqP0mtSwE6iZEhrTgxRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
