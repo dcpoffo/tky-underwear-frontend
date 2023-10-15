@@ -2,16 +2,24 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ListProduts from "./components/produtos";
 import Home from "./pages/Home";
 import Movimentacoes from "./components/movimentações";
+import Login from "./pages/Login";
 
 const Stack = createNativeStackNavigator();
 
 function Routes() {
     return (
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Login">
+
+            <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+            />
 
             <Stack.Screen
                 name="Home"
                 component={Home} />
+                {/* options={{ headerShown: false }} /> */}
 
             <Stack.Screen
                 name="ListProduts"
