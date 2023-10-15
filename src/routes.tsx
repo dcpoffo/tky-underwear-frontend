@@ -3,10 +3,12 @@ import ListProduts from "./components/produtos";
 import Home from "./pages/Home";
 import Movimentacoes from "./components/movimentações";
 import Login from "./pages/Login";
+import React from "react";
 
 const Stack = createNativeStackNavigator();
 
 function Routes() {
+
     return (
         <Stack.Navigator initialRouteName="Login">
 
@@ -18,8 +20,8 @@ function Routes() {
 
             <Stack.Screen
                 name="Home"
-                component={Home} />
-                {/* options={{ headerShown: false }} /> */}
+                component={Home} 
+            options={{ headerShown: false }} />
 
             <Stack.Screen
                 name="ListProduts"

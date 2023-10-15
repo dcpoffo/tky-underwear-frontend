@@ -3,14 +3,14 @@ import React from 'react'
 
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import { Header } from 'react-native/Libraries/NewAppScreen';
+
 
 const Home = () => {
 
-   function handleSignIn(){
-      auth()
-         .signInWithEmailAndPassword('dcpoffo@gmail.com','123456')
-         .then(result => console.log(result))
-         .catch(error => console.log(error))
+   function handleSignOut() {
+      auth().signOut();
+      navigation.navigate("Login");
    }
 
    const navigation = useNavigation();
@@ -24,34 +24,43 @@ const Home = () => {
    }
 
    return (
-      <View style={styles.container}>
-         <View style={styles.content}>
-            <View style={styles.buttonContent}>
+      <>
+         <View style={styles.header}>
+            <Text>header</Text>
+            <Button style={styles.btn} title='Sair' onPress={handleSignOut} />
+         </View>
 
-               <TouchableOpacity style={styles.button}
-                  onPress={handleMovimentacoes}>
-                  <Text style={styles.buttonText}>Movimentações</Text>
-               </TouchableOpacity>
+         <View style={styles.container}>
+            <View style={styles.content}>
+               <View style={styles.buttonContent}>
 
-               <TouchableOpacity style={styles.button}
-                  onPress={handleListProdutos}>
-                  <Text style={styles.buttonText}>Produtos</Text>
+                  <TouchableOpacity style={styles.button}
+                     onPress={handleMovimentacoes}>
+                     <Text style={styles.buttonText}>Movimentações</Text>
+                  </TouchableOpacity>
 
-               </TouchableOpacity>
+                  <TouchableOpacity style={styles.button}
+                     onPress={handleListProdutos}>
+                     <Text style={styles.buttonText}>Produtos</Text>
+                  </TouchableOpacity>
 
-               <Button
-                  title='Testar Firebase'
-                  onPress={handleSignIn}
-               />
+               </View>
 
             </View>
-
          </View>
-      </View>
+      </>
    )
 }
 
 const styles = StyleSheet.create({
+   header: {
+      backgroundColor: '#aaaaaa',
+      height: '10%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 10
+   },
    container: {
       flex: 1,
       alignItems: 'center',
@@ -61,10 +70,9 @@ const styles = StyleSheet.create({
    content: {
       alignItems: 'center',
       justifyContent: 'center',
-      width: '95%',
-      height: '95%',
-      backgroundColor: '#f0f0f0',
-      borderRadius: 10,
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#f0f0f0'
    },
    title: {
       fontWeight: 'bold',

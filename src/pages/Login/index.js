@@ -17,12 +17,11 @@ export default function Login() {
   auth()
     .signInWithEmailAndPassword(email, password)
     .then((result) => {
-      console.log(result);
-      alert('Logado com sucesso!!');      
+      console.log(result);     
+      navigation.navigate("Home");
     })
     .catch((error) => console.log(error))
     .finally(() => setIsLoading(false))
-  //navigation.navigate("Home");
  }
 
  return (
