@@ -4,25 +4,25 @@ import React from 'react'
 const listaProdutos = [
     {
         id: 1,
-        label: 'Cueca básica tamanho P',
+        descricao: 'Cueca básica tamanho P',
         qtd_minima: 0,
         barra: '7777774138576'
     },
     {
         id: 2,
-        label: 'Cueca básica tamanho M',
+        descricao: 'Cueca básica tamanho M',
         qtd_minima: 0,
         barra: '7777765144272'
     },
     {
         id: 3,
-        label: 'Cueca básica tamanho G',
+        descricao: 'Cueca básica tamanho G',
         qtd_minima: 0,
         barra: '7777713235342'
     },
     {
         id: 4,
-        label: 'Cueca básica tamanho GG',
+        descricao: 'Cueca básica tamanho GG',
         qtd_minima: 0,
         barra: '7777775831551'
     },
@@ -42,8 +42,8 @@ const Lista = () => {
                     <Text style={styles.title}>Qtd.Mín.Estoque</Text>
                 </View>
                 <View style={styles.linhaSuperior}>
-                    <Text style={styles.label}>{item.label}</Text>
-                    <Text style={styles.label}>{item.qtd_minima}</Text>
+                    <Text style={styles.descricao}>{item.descricao}</Text>
+                    <Text style={styles.descricao}>{item.qtd_minima}</Text>
                 </View>
 
                 <View style={styles.barra}>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
-    label: {
+    descricao: {
         // fontWeight: 'bold',
         fontSize: 16,
     }

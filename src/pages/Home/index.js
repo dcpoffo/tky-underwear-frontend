@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
-
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Header } from 'react-native/Libraries/NewAppScreen';
@@ -27,8 +27,9 @@ const Home = () => {
       <>
          <View style={styles.header}>
             <Text>header</Text>
-            <Button style={styles.btn} title='Sair' onPress={handleSignOut} />
+            <MaterialIcons.Button style={styles.buttonLogout} name="logout" onPress={handleSignOut} />
          </View>
+
 
          <View style={styles.container}>
             <View style={styles.content}>
@@ -54,7 +55,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
    header: {
-      backgroundColor: '#aaaaaa',
+      backgroundColor: '#e6e8ed',
       height: '10%',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
       height: 50,
       width: '70%',
       backgroundColor: '#B0060E',
-      borderRadius: 4,
+      borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
       margin: 10,
@@ -90,6 +91,11 @@ const styles = StyleSheet.create({
    buttonText: {
       fontSize: 20,
       color: '#FFF'
+   },
+   buttonLogout: {
+      size: 24,
+      backgroundColor: "#B0060E",
+      color: "#FFF"
    },
    buttonContent: {
       height: '30%',

@@ -44,7 +44,7 @@ export default function Login() {
 
      <TouchableOpacity style={styles.button} onPress={handleLogin}>
        <Text style={styles.buttonText}>Acessar</Text>
-     </TouchableOpacity>
+     </TouchableOpacity>    
 
      {isLoading  && <ActivityIndicator color={'#AAAAAA'}/> }
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 45,
     backgroundColor: '#A7A7A7',
-    borderRadius: 4,
+    borderRadius: 10,
     marginBottom: 14,
     padding: 8,
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 45,
     backgroundColor: '#B0060E',
-    borderRadius: 4,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20
