@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native'
-import React from 'react'
+import firestore from '@react-native-firebase/firestore';
+import React, { useEffect } from 'react'
 
 const listaProdutos = [
     {
@@ -54,7 +55,6 @@ const Lista = () => {
         />
     )
 }
-
 
 const styles = StyleSheet.create({
     list: {

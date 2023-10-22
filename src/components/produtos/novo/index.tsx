@@ -1,14 +1,19 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
+
+import firebase from '@react-native-firebase/app';
+import firestore from '@react-native-firebase/firestore';
 
 const NovoProduto = () => {
 
     const [descricao, setDescricao] = useState('');
     const [qtdMinima, setQtdMinima] = useState('');
     const [barra, setBarra] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleCadastrar() {
-        alert(descricao);
+        setIsLoading(true);
+        //firestore()            
     }
 
     return (
@@ -39,6 +44,8 @@ const NovoProduto = () => {
                 <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
 
+            {isLoading && <ActivityIndicator color={'#AAAAAA'} />}
+
         </View >
     )
 }
@@ -65,13 +72,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#FFF'
     },
-    input:{
+    input: {
         width: '95%',
         height: 45,
         backgroundColor: '#A7A7A7',
         borderRadius: 10,
         marginBottom: 14,
         padding: 8,
-      },
+    },
 
 })

@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 
-
 const Home = () => {
 
    function handleSignOut() {
