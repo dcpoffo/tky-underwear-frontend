@@ -58,8 +58,8 @@ const Lista = () => {
 
 const styles = StyleSheet.create({
     list: {
-        marginStart: 14,
-        marginEnd: 14,
+        marginStart: 10,
+        marginEnd: 10,
     },
     barra: {
         justifyContent: 'space-between',

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Lista from './lista'
 import { useNavigation } from '@react-navigation/native'
@@ -7,33 +7,51 @@ import firestore from '@react-native-firebase/firestore';
 const ListProduts = () => {
 
   const navigation = useNavigation();
-  const [produto, setProduto] = useState<any>('');
-  
-  function getData() {
-    firestore()
-      .collection('produtos')
-      .get()
-      .then((response) => {
-        response.forEach(item => {
-          console.log('ID: ', item.id, item.data());                
-        })
-      })   
-  }
-//PEGA DETERMINADA POSIÇÃO DA COLEÇÃO
-  // firestore()
+  const [loading, setLoading] = useState(true);
+  const [produtos, setProdutos] = useState<any[]>([]);
+
+  // function getData() {
+  //   firestore()
   //     .collection('produtos')
   //     .get()
-  //     .then((itens) => {
-  //       itens.docs[0].data();
-  //       console.log(itens.docs[0].data())
-  //     }) 
+  //     .then((response) => {
+  //       response.forEach(item => {
+  //         console.log('ID: ', item.id, item.data());                
+  //       })
+  //     })   
+  // }
+
+  // useEffect(() => {
+  //   getData() ;
+  // }, [])
 
   useEffect(() => {
-    getData() ;
-  }, [])
+    const subscriber = firestore()
+      .collection('produtos')
+      .onSnapshot(querySnapshot => {
+        const produtos: any[] = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          produtos.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setProdutos(produtos);
+        setLoading(false);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
 
   function handleNovo() {
-    //navigation.navigate("Home");
+    // navigation.navigate("Home");
+  }
+
+  if (loading) {
+    return <ActivityIndicator />;
   }
 
   return (
@@ -48,20 +66,15 @@ const ListProduts = () => {
         </TouchableOpacity>
       </View>
 
-      {/* <Lista/> */}
-      <Text>Descrição: {produto.descricao}</Text>
-      <Text>Cód. Barra: {produto.barra}</Text>
-      <Text>Estoque mín.: {produto.qtd_minima}</Text>
-
       <FlatList
         style={styles.list}
         showsVerticalScrollIndicator={false}
-        data={produto}
+        data={produtos}
         renderItem={({ item }) => <>
 
           <View style={styles.linhaSuperior}>
-            <Text style={styles.title}>Descrição</Text>
-            <Text style={styles.title}>Qtd.Mín.Estoque</Text>
+            <Text style={styles.titleList}>Descrição</Text>
+            <Text style={styles.titleList}>Qtd.Mín.Estoque</Text>
           </View>
           <View style={styles.linhaSuperior}>
             <Text style={styles.descricao}>{item.descricao}</Text>
@@ -69,17 +82,17 @@ const ListProduts = () => {
           </View>
 
           <View style={styles.barra}>
-            <Text style={styles.title}>Cód. Barra</Text>
+            <Text style={styles.titleList}>Cód. Barra</Text>
             <Text>{item.barra}</Text>
           </View>
-        </>}
+        </>        
+      }
       />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  
   container: {
     flex: 1,
     marginBottom: 24,
@@ -105,6 +118,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 14,
   },
+  titleList: {
+    fontWeight: 'bold',
+    fontSize: 16,
+},
   cabecalho: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -113,8 +130,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#dadada'
   },
   list: {
-    marginStart: 14,
-    marginEnd: 14,
+    marginStart: 10,
+    marginEnd: 10,
   },
   linhaSuperior: {
     flexDirection: 'row',
