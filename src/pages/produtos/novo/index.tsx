@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 
-import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native'
+import { StackTypes } from '../../../routes';
+
 
 const NovoProduto = () => {
 
+    const navigation = useNavigation<StackTypes>();
     const [descricao, setDescricao] = useState('');
     const [qtdMinima, setQtdMinima] = useState('');
     const [barra, setBarra] = useState('');
@@ -13,7 +16,23 @@ const NovoProduto = () => {
 
     function handleCadastrar() {
         setIsLoading(true);
-        //firestore()            
+        firestore()
+            .collection('produtos')
+            .add({
+                descricao: descricao,
+                qtd_minima: qtdMinima,
+                barra: barra
+            })
+            .then(() => {
+                alert("Produto criado com sucesso!")
+            })
+            .catch((erro) => {
+                console.log(`**** ${erro}`);
+            })
+            .finally(() => {
+                setIsLoading(false);
+                navigation.goBack();
+            })
     }
 
     return (
@@ -44,7 +63,7 @@ const NovoProduto = () => {
                 <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
 
-            {isLoading && <ActivityIndicator color={'#AAAAAA'} />}
+            {isLoading && <ActivityIndicator size="large" />}
 
         </View >
     )

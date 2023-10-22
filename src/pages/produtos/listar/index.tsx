@@ -1,14 +1,16 @@
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Lista from './lista'
+
 import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
+import { StackTypes } from '../../../routes';
 
-const ListProduts = () => {
+const ListaProdutos = () => {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackTypes>();
   const [loading, setLoading] = useState(true);
   const [produtos, setProdutos] = useState<any[]>([]);
+  const [qtdProdutos, setQtdPtodutos] = useState(0);
 
   // function getData() {
   //   firestore()
@@ -36,7 +38,8 @@ const ListProduts = () => {
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
-        });
+          setQtdPtodutos(querySnapshot.size)
+        });        
 
         setProdutos(produtos);
         setLoading(false);
@@ -47,11 +50,11 @@ const ListProduts = () => {
   }, []);
 
   function handleNovo() {
-    // navigation.navigate("Home");
+    navigation.navigate("NovoProduto");
   }
 
   if (loading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator size="large"/>;
   }
 
   return (
@@ -59,13 +62,12 @@ const ListProduts = () => {
     <View style={styles.container}>
 
       <View style={styles.cabecalho}>
-        <Text style={styles.title}>Produtos cadastrados</Text>
+        
+        <Text style={styles.title}>Produtos cadastrados: {qtdProdutos}</Text>
         <TouchableOpacity style={styles.button} onPress={handleNovo}>
-
           <Text style={styles.buttonText}>Novo</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>        
       </View>
-
       <FlatList
         style={styles.list}
         showsVerticalScrollIndicator={false}
@@ -152,4 +154,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ListProduts;
+export default ListaProdutos;

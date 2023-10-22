@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import { StackTypes } from '../../routes';
 
 export default function Login() {
 
@@ -9,7 +10,7 @@ export default function Login() {
  const [password, setPassword] = useState('');
  const [isLoading, setIsLoading] = useState(false);
 
- const navigation = useNavigation();
+ const navigation = useNavigation<StackTypes>();
 
  function handleLogin(){
   setIsLoading(true);
@@ -46,7 +47,7 @@ export default function Login() {
        <Text style={styles.buttonText}>Acessar</Text>
      </TouchableOpacity>    
 
-     {isLoading  && <ActivityIndicator color={'#AAAAAA'}/> }
+     {isLoading  && <ActivityIndicator size="large"/> }
 
    </View>
   );

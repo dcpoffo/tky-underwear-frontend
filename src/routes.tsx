@@ -1,13 +1,23 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./pages/Home";
 import Movimentacoes from "./components/movimentações";
 import Login from "./pages/Login";
 import React from "react";
-import ListProduts from "./components/produtos/listar";
-import NovoProduto from "./components/produtos/novo";
+import ListaProdutos from "./pages/produtos/listar";
+import NovoProduto from "./pages/produtos/novo";
 
 const Stack = createNativeStackNavigator();
+
+type StackNavigation = {
+    Login: undefined;
+    Home: undefined;
+    ListaProdutos: undefined;
+    NovoProduto: undefined;
+    Movimentacoes: undefined;
+};
+
+export type StackTypes = NativeStackNavigationProp<StackNavigation>
 
 function Routes() {
 
@@ -26,8 +36,8 @@ function Routes() {
             options={{ headerShown: false }} />
 
             <Stack.Screen
-                name="ListProduts"
-                component={ListProduts}
+                name="ListaProdutos"
+                component={ListaProdutos}
                 options={{ title: 'Lista de Produtos' }} />
             
             <Stack.Screen
