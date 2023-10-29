@@ -4,85 +4,138 @@ import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { StackTypes } from '../../routes';
 
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
+
+const schema = yup.object({
+  email: yup
+    .string()
+    .email("E-mail inválido").required("Informe seu e-mail"),
+  password: yup
+    .string()
+    .min(6, "A senha deve ter no mínimo 6 digitos")
+    .required("Informe sua senha")
+})
+
 export default function Login() {
 
- const [email, setEmail] = useState('');
- const [password, setPassword] = useState('');
- const [isLoading, setIsLoading] = useState(false);
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  })
 
- const navigation = useNavigation<StackTypes>();
+  const [isLoading, setIsLoading] = useState(false);
 
- function handleLogin(){
-  setIsLoading(true);
+  const navigation = useNavigation<StackTypes>();
 
-  auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((result) => {
-      console.log(result);     
-      navigation.navigate("Home");
-    })
-    .catch((error) => console.log(error))
-    .finally(() => setIsLoading(false))
- }
+  function handleLogin(data: any) {
+    setIsLoading(true);
 
- return (
-   <View style={styles.container}>
-     <Text style={styles.title}>Seja bem vindo(a)!</Text>
+    auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+        navigation.navigate("Home");
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
 
-     <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        placeholder="Digite seu email"
-     />
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Seja bem vindo(a)!</Text>
 
-     <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        placeholder="Digite sua senha"
-     />
+      <Controller
+        control={control}
+        name='email'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={[
+              styles.input, {
+                borderWidth: errors.email && 1,
+                borderColor: errors.email && '#B0060E'
+              }]}
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="Digite seu e-mail"
+          />
+        )}
+      />
+      {errors.email && <Text style={styles.labelError}>{errors.email?.message}</Text>}
 
-     <TouchableOpacity style={styles.button} onPress={handleLogin}>
-       <Text style={styles.buttonText}>Acessar</Text>
-     </TouchableOpacity>    
+      <Controller
+        control={control}
+        name='password'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+          style={[
+            styles.input, {
+              borderWidth: errors.password && 1,
+              borderColor: errors.password && '#B0060E'
+            }]}
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="Digite sua senha"
+            secureTextEntry={true}
+          />
+        )}
+      />
+      {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
 
-     {isLoading  && <ActivityIndicator size="large"/> }
 
-   </View>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit(handleLogin)}>
+        <Text style={styles.buttonText}>Acessar</Text>
+      </TouchableOpacity>
+
+      {isLoading && <ActivityIndicator size="large" />}
+
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
+  container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#38C'
   },
-  title:{
+  title: {
     marginBottom: 14,
     fontSize: 20,
   },
-  input:{
+  input: {
     width: '90%',
     height: 45,
     backgroundColor: '#A7A7A7',
     borderRadius: 10,
-    marginBottom: 14,
     padding: 8,
+    fontSize: 18,
+    marginTop: 10,
   },
-  button:{
+  button: {
     width: '90%',
     height: 45,
     backgroundColor: '#B0060E',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20
+    marginTop: 20
   },
-  buttonText:{
+  buttonText: {
     fontSize: 20,
     color: '#FFF'
+  },
+  labelError: {
+    alignSelf: 'flex-start',
+    color: '#B0060E',
+    marginBottom: 15,
+    marginTop: 2,
+    marginLeft: 20,
+    fontSize: 15,
   }
 })
