@@ -12,21 +12,6 @@ const ListaProdutos = () => {
   const [produtos, setProdutos] = useState<any[]>([]);
   const [qtdProdutos, setQtdPtodutos] = useState(0);
 
-  // function getData() {
-  //   firestore()
-  //     .collection('produtos')
-  //     .get()
-  //     .then((response) => {
-  //       response.forEach(item => {
-  //         console.log('ID: ', item.id, item.data());                
-  //       })
-  //     })   
-  // }
-
-  // useEffect(() => {
-  //   getData() ;
-  // }, [])
-
   useEffect(() => {
     const subscriber = firestore()
       .collection('produtos')

@@ -1,11 +1,11 @@
 import { NativeStackNavigationProp, createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./pages/Home";
-import Movimentacoes from "./components/movimentações";
 import Login from "./pages/Login";
 import React from "react";
 import ListaProdutos from "./pages/produtos/listar";
 import NovoProduto from "./pages/produtos/novo";
+import ListaMovimentacoes from "./pages/Movimentacoes/listar";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +47,7 @@ function Routes() {
 
             <Stack.Screen
                 name="Movimentacoes"
-                component={Movimentacoes}
+                component={ListaMovimentacoes}
                 options={{ title: 'Movimentações' }} />
 
         </Stack.Navigator>

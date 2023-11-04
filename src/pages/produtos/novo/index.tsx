@@ -5,23 +5,41 @@ import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native'
 import { StackTypes } from '../../../routes';
 
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup"
+
+const schema = yup.object({
+    descricao: yup
+        .string()
+        .required("Informe a descrição"),
+    qtdMinima: yup
+        .string()
+        .required("Campo não pode ficar em branco. Pelo menos 0"),
+
+    barra: yup
+        .string()
+        .required("Campo não pode ficar em branco. Pelo menos 0"),
+})
+
 
 const NovoProduto = () => {
 
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
+    })
+
     const navigation = useNavigation<StackTypes>();
-    const [descricao, setDescricao] = useState('');
-    const [qtdMinima, setQtdMinima] = useState('');
-    const [barra, setBarra] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    function handleCadastrar() {
+    function handleCadastrar(data: any) {
         setIsLoading(true);
         firestore()
             .collection('produtos')
             .add({
-                descricao: descricao,
-                qtd_minima: qtdMinima,
-                barra: barra
+                descricao: data.descricao,
+                qtd_minima: data.qtdMinima,
+                barra: data.barra
             })
             .then(() => {
                 alert("Produto criado com sucesso!")
@@ -37,29 +55,67 @@ const NovoProduto = () => {
 
     return (
         <View style={styles.container}>
+            <Controller
+                control={control}
+                name='descricao'
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                        style={[
+                            styles.input, {
+                                borderWidth: errors.descricao && 1,
+                                borderColor: errors.descricao && '#B0060E'
+                            }]}
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        placeholder="Descrição do produto"
+                    />
+                )}
+            />
+            {errors.descricao && <Text style={styles.labelError}>{errors.descricao?.message}</Text>}
 
-            <TextInput
-                style={styles.input}
-                value={descricao}
-                onChangeText={(text) => setDescricao(text)}
-                placeholder="Descrição do produto"
+            <Controller
+                control={control}
+                name='qtdMinima'
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                        style={[
+                            styles.input, {
+                                borderWidth: errors.qtdMinima && 1,
+                                borderColor: errors.qtdMinima && '#B0060E'
+                            }]}
+                        value={value?.toString()}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        keyboardType="numeric"
+                        placeholder="Quantidade mínima em estoque"
+                    />
+                )}
             />
-            <TextInput
-                style={styles.input}
-                value={qtdMinima}
-                onChangeText={(text) => setQtdMinima(text)}
-                keyboardType="numeric"
-                placeholder="Quantidade mínima em estoque"
-            />
-            <TextInput
-                style={styles.input}
-                value={barra}
-                onChangeText={(text) => setBarra(text)}
-                keyboardType="numeric"
-                placeholder="Código de barra (EAN13)"
-            />
+            {errors.qtdMinima && <Text style={styles.labelError}>{errors.qtdMinima?.message}</Text>}
 
-            <TouchableOpacity style={styles.button} onPress={handleCadastrar}>
+
+            <Controller
+                control={control}
+                name='barra'
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                        style={[
+                            styles.input, {
+                                borderWidth: errors.barra && 1,
+                                borderColor: errors.barra && '#B0060E'
+                            }]}
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        keyboardType="numeric"
+                        placeholder="Código de barra (EAN13)"
+                    />
+                )}
+            />
+            {errors.barra && <Text style={styles.labelError}>{errors.barra?.message}</Text>}
+
+            <TouchableOpacity style={styles.button} onPress={handleSubmit(handleCadastrar)}>
                 <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
 
@@ -99,5 +155,13 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         padding: 8,
     },
+    labelError: {
+        alignSelf: 'flex-start',
+        color: '#B0060E',
+        marginBottom: 15,
+        marginTop: 2,
+        marginLeft: 10,
+        fontSize: 15,
+    }
 
 })

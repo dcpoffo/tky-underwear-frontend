@@ -12,6 +12,7 @@ const schema = yup.object({
   email: yup
     .string()
     .email("E-mail inválido").required("Informe seu e-mail"),
+    //patern    
   password: yup
     .string()
     .min(6, "A senha deve ter no mínimo 6 digitos")
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   input: {
-    width: '90%',
+    width: '95%',
     height: 45,
     backgroundColor: '#A7A7A7',
     borderRadius: 10,

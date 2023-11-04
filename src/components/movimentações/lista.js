@@ -46,8 +46,8 @@ const Lista = () => {
 
                     <Text style={styles.label}>{item.label}</Text>
 
-                    <Text style={item.type === 1 ? styles.value : styles.expenses}>
-                        {item.type === 1 ? `R$ ${item.value}` : `R$ -${item.value}`}
+                    <Text style={item.paymentType === 1 ? styles.value : styles.expenses}>
+                        {item.paymentType === 1 ? `R$ ${item.value.toFixed(2)}` : `R$ -${item.value.toFixed(2)}`}
                     </Text>
 
                 </View>
