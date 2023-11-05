@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
-import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import { StackTypes } from '../../routes';
+import { MaterialIcons  } from '@expo/vector-icons';
 
 const Home = () => {
-   
+
    const navigation = useNavigation<StackTypes>();
 
    function handleSignOut() {
@@ -28,7 +28,10 @@ const Home = () => {
       <>
          <View style={styles.header}>
             <Text>header</Text>
-            <MaterialIcons.Button style={styles.buttonLogout} name="logout" onPress={handleSignOut} />
+            <TouchableOpacity style={styles.buttonHeader} onPress={handleSignOut}>
+            <MaterialIcons name="logout" size={24} color="blue" />
+            </TouchableOpacity>            
+            
          </View>
 
 
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: '#38C'
+      backgroundColor: '#2f59f5'
    },
    content: {
       alignItems: 'center',
@@ -83,12 +86,19 @@ const styles = StyleSheet.create({
    button: {
       height: 50,
       width: '70%',
-      backgroundColor: '#B0060E',
+      backgroundColor: '#2f59f5',
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
       margin: 10,
    },
+   buttonHeader: {
+      height: 30,
+      width: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 10,
+    },
    buttonText: {
       fontSize: 20,
       color: '#FFF'

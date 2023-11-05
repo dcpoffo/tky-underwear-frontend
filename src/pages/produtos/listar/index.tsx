@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
 import { StackTypes } from '../../../routes';
 
+import { FontAwesome5 } from '@expo/vector-icons';
+
 const ListaProdutos = () => {
 
   const navigation = useNavigation<StackTypes>();
@@ -48,9 +50,10 @@ const ListaProdutos = () => {
 
       <View style={styles.cabecalho}>
         
-        <Text style={styles.title}>Produtos cadastrados: {qtdProdutos}</Text>
+        <Text style={styles.title}>Produtos cadastrados: {qtdProdutos}</Text>        
         <TouchableOpacity style={styles.button} onPress={handleNovo}>
-          <Text style={styles.buttonText}>Novo</Text>
+          {/* <Text style={styles.buttonText}>Novo</Text> */}
+          <FontAwesome5 name="plus" size={24} color="blue" />
         </TouchableOpacity>        
       </View>
       <FlatList
@@ -87,10 +90,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#dadada'
   },
   button: {
-    height: 40,
-    width: 80,
-    backgroundColor: '#B0060E',
-    borderRadius: 4,
+    height: 30,
+    width: 30,
+    // backgroundColor: '#B0060E',
+    // borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,

@@ -6,6 +6,7 @@ import React from "react";
 import ListaProdutos from "./pages/produtos/listar";
 import NovoProduto from "./pages/produtos/novo";
 import ListaMovimentacoes from "./pages/Movimentacoes/listar";
+import NovaMovimentacao from "./pages/Movimentacoes/novo";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ type StackNavigation = {
     ListaProdutos: undefined;
     NovoProduto: undefined;
     Movimentacoes: undefined;
+    NovaMovimentacao: undefined;
 };
 
 export type StackTypes = NativeStackNavigationProp<StackNavigation>
@@ -47,8 +49,14 @@ function Routes() {
 
             <Stack.Screen
                 name="Movimentacoes"
-                component={ListaMovimentacoes}
+                component={ListaMovimentacoes} 
                 options={{ title: 'Movimentações' }} />
+
+                <Stack.Screen
+                name="NovaMovimentacao"
+                component={NovaMovimentacao}
+                options={{title: "Nova Movimentação"}}
+                />
 
         </Stack.Navigator>
     )

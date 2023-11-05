@@ -1,9 +1,14 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native'
+import { StackTypes } from '../../../routes';
 
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const ListaMovimentacoes = () => {
+
+  const navigation = useNavigation<StackTypes>();
 
   const [loading, setLoading] = useState(true);
   const [movimentacoes, setMovimentacoes] = useState<any[]>([]);
@@ -19,8 +24,8 @@ const ListaMovimentacoes = () => {
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
-          
-        });        
+
+        });
         setMovimentacoes(movimentacoes);
         console.log(movimentacoes)
         setLoading(false);
@@ -31,40 +36,50 @@ const ListaMovimentacoes = () => {
   }, []);
 
   if (loading) {
-    return <ActivityIndicator size="large"/>;
+    return <ActivityIndicator size="large" />;
+  }
+
+  function handleNovo() {
+    navigation.navigate("NovaMovimentacao");
   }
 
   return (
 
-  <View style={styles.container}>
+    <View style={styles.container}>
 
 
-    <Text style={styles.title}>Últimas Movimentações</Text>
+      <View style={styles.cabecalho}>
+        <Text style={styles.title}>Últimas movimentações</Text>
+        <TouchableOpacity style={styles.button} onPress={handleNovo}>
+          {/* <Text style={styles.buttonText}>Novo</Text> */}
+          <FontAwesome5 name="plus" size={24} color="blue" />
+        </TouchableOpacity>
+      </View>
 
-    <FlatList
-      style={styles.list}
-      showsVerticalScrollIndicator={false}
-      data={movimentacoes}
-      renderItem={({ item }) => <>
+      <FlatList
+        style={styles.list}
+        showsVerticalScrollIndicator={false}
+        data={movimentacoes}
+        renderItem={({ item }) => <>
 
-        <View style={styles.linhaSuperior}>
-          <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.tipoPgto}>{item.paymentType}</Text>
-        </View>
+          <View style={styles.linhaSuperior}>
+            <Text style={styles.date}>{item.date}</Text>
+            <Text style={styles.tipoPgto}>{item.paymentType}</Text>
+          </View>
 
-        <View style={styles.content}>
+          <View style={styles.content}>
 
-          <Text style={styles.label}>{item.label}</Text>
+            <Text style={styles.label}>{item.label}</Text>
 
-          <Text style={item.type === 1 ? styles.value : styles.expenses}>
-            {item.type === 1 ? `R$ ${item.value.toFixed(2)}` : `R$ -${item.value.toFixed(2)}`}
-          </Text>
+            <Text style={item.type === 1 ? styles.value : styles.expenses}>
+              {item.type === 1 ? `R$ ${item.value.toFixed(2)}` : `R$ -${item.value.toFixed(2)}`}
+            </Text>
 
-        </View>        
-      </>}
-    />
+          </View>
+        </>}
+      />
 
-  </View>
+    </View>
   )
 }
 
@@ -73,7 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 24,
     borderBottomWidth: 0.5,
-    borderBottomColor: '#dadada'
+    borderBottomColor: '#2f59f5'
   },
   title: {
     textAlign: 'center',
@@ -91,7 +106,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginBottom: 8,
     borderBottomWidth: 1,
-    borderColor: '#dadada',
+    borderColor: '#2f59f5',
   },
   linhaSuperior: {
     flexDirection: 'row',
@@ -100,12 +115,12 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   date: {
-    color: '#dadada',
+    color: '#2f59f5',
     fontWeight: 'bold',
     fontSize: 16,
   },
   tipoPgto: {
-    color: '#dadada',
+    color: '#2f59f5',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -122,7 +137,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#e74c3c',
     fontWeight: 'bold',
-  }
+  },
+  cabecalho: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+    borderBottomWidth: 2,
+    borderBottomColor: '#dadada'
+  },
+  button: {
+    height: 30,
+    width: 30,
+    // backgroundColor: '#B0060E',
+    // borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#FFF',
+  },
 })
 
 export default ListaMovimentacoes
