@@ -27,7 +27,6 @@ const ListaMovimentacoes = () => {
 
         });
         setMovimentacoes(movimentacoes);
-        console.log(movimentacoes)
         setLoading(false);
       });
 

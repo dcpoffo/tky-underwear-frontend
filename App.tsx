@@ -5,7 +5,6 @@ import Routes from './src/routes';
 
 import React, { useState, useEffect } from 'react';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import Home from './src/pages/Home';
 
 export default function App() {
 
