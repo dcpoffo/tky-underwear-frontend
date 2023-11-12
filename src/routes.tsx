@@ -7,6 +7,7 @@ import ListaProdutos from "./pages/produtos/listar";
 import NovoProduto from "./pages/produtos/novo";
 import ListaMovimentacoes from "./pages/Movimentacoes/listar";
 import NovaMovimentacao from "./pages/Movimentacoes/novo";
+import Perfil from "./pages/profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ type StackNavigation = {
     NovoProduto: undefined;
     Movimentacoes: undefined;
     NovaMovimentacao: undefined;
+    Perfil: undefined;
 };
 
 export type StackTypes = NativeStackNavigationProp<StackNavigation>
@@ -34,14 +36,14 @@ function Routes() {
 
             <Stack.Screen
                 name="Home"
-                component={Home} 
-            options={{ headerShown: false }} />
+                component={Home}
+                options={{ headerShown: false }} />
 
             <Stack.Screen
                 name="ListaProdutos"
                 component={ListaProdutos}
                 options={{ title: 'Lista de Produtos' }} />
-            
+
             <Stack.Screen
                 name="NovoProduto"
                 component={NovoProduto}
@@ -49,14 +51,20 @@ function Routes() {
 
             <Stack.Screen
                 name="Movimentacoes"
-                component={ListaMovimentacoes} 
+                component={ListaMovimentacoes}
                 options={{ title: 'Movimentações' }} />
 
-                <Stack.Screen
+            <Stack.Screen
                 name="NovaMovimentacao"
                 component={NovaMovimentacao}
-                options={{title: "Nova Movimentação"}}
-                />
+                options={{ title: "Nova Movimentação" }}
+            />
+
+            <Stack.Screen
+                name="Perfil"
+                component={Perfil}
+                options={{ title: "Suas informações" }}
+            />
 
         </Stack.Navigator>
     )

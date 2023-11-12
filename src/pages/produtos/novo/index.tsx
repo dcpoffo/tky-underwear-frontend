@@ -24,7 +24,7 @@ const schema = yup.object({
 })
 
 
-const NovoProduto = () => {
+export default function NovoProduto() {
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -129,8 +129,6 @@ const NovoProduto = () => {
     )
 }
 
-export default NovoProduto
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -167,5 +165,4 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 15,
     }
-
 })

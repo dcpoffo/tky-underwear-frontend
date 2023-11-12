@@ -1,10 +1,14 @@
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
+import * as eva from '@eva-design/eva'
+import { ApplicationProvider } from '@ui-kitten/components'
+
 import Routes from './src/routes';
 
 import React, { useState, useEffect } from 'react';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import Home from './src/pages/Home';
 
 export default function App() {
 
@@ -15,13 +19,14 @@ export default function App() {
     return subscriber;
   }, []);
 
-
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor="#38C" barStyle={'light-content'} />
-      {/* {user ? <Home/> : <Routes />} */}
-    <Routes/>
-    </NavigationContainer>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <NavigationContainer>
+        <StatusBar backgroundColor="#38C" barStyle={'light-content'} />
+        {/* {user ? <Home/> : <Routes />} */}
+        <Routes />
+      </NavigationContainer>
+    </ApplicationProvider>
   );
 }
 

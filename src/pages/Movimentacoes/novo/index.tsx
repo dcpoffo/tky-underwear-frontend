@@ -1,5 +1,6 @@
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
+
 import firestore from '@react-native-firebase/firestore';
 
 import { useForm, Controller } from 'react-hook-form';
@@ -24,11 +25,11 @@ const schema = yup.object({
     .string()
     .required('Informe a opção de pagamento'),
   date: yup
-  .string()
-  .required('Informe a data')
+    .string()
+    .required('Informe a data')
 })
 
-const NovaMovimentacao = () => {
+export default function NovaMovimentacao() {
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -38,35 +39,29 @@ const NovaMovimentacao = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   function handleCadastrar(data: any) {
-    setIsLoading(true);          
+    setIsLoading(true);
     firestore()
-            .collection('movimentacoes')
-            .add({
-                label: data.label,
-                type: data.type,
-                date: data.date,
-                paymentType: data.paymentType,
-                value: data.valor.replace(",", "."),
-            })
-            .then(() => {
-                Alert.alert("Cadastro de Movimentações","Movimentação cadastrada com sucesso!")
-                console.log(data)
-            })
-            .catch((erro) => {
-                console.log(`**** ${erro}`);
-            })
-            .finally(() => {
-                setIsLoading(false);
-                navigation.goBack();
-            })
+      .collection('movimentacoes')
+      .add({
+        label: data.label,
+        type: data.type,
+        date: data.date,
+        paymentType: data.paymentType,
+        value: data.valor.replace(",", "."),
+      })
+      .then(() => {
+        Alert.alert("Cadastro de Movimentações", "Movimentação cadastrada com sucesso!")
+        console.log(data)
+      })
+      .catch((erro) => {
+        console.log(`**** ${erro}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        navigation.goBack();
+      })
   }
-{/*
-    label: 'Compra de malha',
-      type: 0, // 0 = despesa / 1 = receinta
-      date: '01/09/2023',
-      paymentType: 'Pix',
-      value: '120,00'
-     */}
+  
   return (
     <>
       <Cabecalho />
@@ -106,8 +101,8 @@ const NovaMovimentacao = () => {
               keyboardType="decimal-pad"
               placeholder='Tipo da movimentação (0 = Compra / 1 = Venda)' />
           )} />
-        {errors.type && <Text style={styles.labelError}>{errors.type?.message}</Text>}
-        
+        {errors.type && <Text style={styles.labelError}>{errors.type?.message}</Text>}        
+
         <Controller
           control={control}
           name='date'
@@ -170,8 +165,6 @@ const NovaMovimentacao = () => {
       </View></>
   )
 }
-
-export default NovaMovimentacao
 
 const styles = StyleSheet.create({
   container: {

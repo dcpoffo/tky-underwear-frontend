@@ -8,7 +8,7 @@ import { StackTypes } from '../../../routes';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Cabecalho from '../../../components/header/header';
 
-const ListaProdutos = () => {
+export default function ListaProdutos() {
 
   const navigation = useNavigation<StackTypes>();
   const [loading, setLoading] = useState(true);
@@ -86,8 +86,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: 24,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#dadada'
   },
   button: {
     height: 30,
@@ -141,5 +139,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   }
 })
-
-export default ListaProdutos;

@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#38C'
+    backgroundColor: '#2f59f5'
   },
   title: {
     marginBottom: 14,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    width: '90%',
+    width: '95%',
     height: 45,
     backgroundColor: '#B0060E',
     borderRadius: 10,

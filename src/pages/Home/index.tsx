@@ -4,10 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StackTypes } from '../../routes';
 import Cabecalho from '../../components/header/header';
 
-const Home = () => {
+export default function Home() {
 
-   const navigation = useNavigation<StackTypes>();   
-
+   const navigation = useNavigation<StackTypes>();  
 
    function handleListProdutos() {
       navigation.navigate("ListaProdutos");
@@ -15,6 +14,10 @@ const Home = () => {
 
    function handleMovimentacoes() {
       navigation.navigate("Movimentacoes");
+   }
+
+   function handlePerfil() {
+      navigation.navigate("Perfil");
    }
 
    return (
@@ -33,6 +36,11 @@ const Home = () => {
                   <TouchableOpacity style={styles.button}
                      onPress={handleListProdutos}>
                      <Text style={styles.buttonText}>Produtos</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={styles.button}
+                     onPress={handlePerfil}>
+                     <Text style={styles.buttonText}>Alterar Nome</Text>
                   </TouchableOpacity>
 
                </View>
@@ -102,5 +110,3 @@ const styles = StyleSheet.create({
       flexDirection: "column"
    }
 })
-
-export default Home

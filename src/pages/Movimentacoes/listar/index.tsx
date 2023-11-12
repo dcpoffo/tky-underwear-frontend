@@ -7,7 +7,7 @@ import { StackTypes } from '../../../routes';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Cabecalho from '../../../components/header/header';
 
-const ListaMovimentacoes = () => {
+export default function ListaMovimentacoes() {
 
   const navigation = useNavigation<StackTypes>();
 
@@ -87,8 +87,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: 24,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#2f59f5'
   },
   title: {
     textAlign: 'center',
@@ -159,5 +157,3 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
 })
-
-export default ListaMovimentacoes
