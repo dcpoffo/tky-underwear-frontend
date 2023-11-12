@@ -1,19 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 import { StackTypes } from '../../routes';
-import { MaterialIcons  } from '@expo/vector-icons';
+import Cabecalho from '../../components/header/header';
 
 const Home = () => {
 
-   const navigation = useNavigation<StackTypes>();
-
-   function handleSignOut() {
-      auth().signOut();
-      navigation.navigate("Login");
-   }
+   const navigation = useNavigation<StackTypes>();   
 
 
    function handleListProdutos() {
@@ -26,14 +19,7 @@ const Home = () => {
 
    return (
       <>
-         <View style={styles.header}>
-            <Text>header</Text>
-            <TouchableOpacity style={styles.buttonHeader} onPress={handleSignOut}>
-            <MaterialIcons name="logout" size={24} color="blue" />
-            </TouchableOpacity>            
-            
-         </View>
-
+         <Cabecalho/>
 
          <View style={styles.container}>
             <View style={styles.content}>
@@ -98,7 +84,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       margin: 10,
-    },
+   },
    buttonText: {
       fontSize: 20,
       color: '#FFF'

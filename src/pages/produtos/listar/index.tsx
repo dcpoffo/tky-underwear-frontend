@@ -6,6 +6,7 @@ import firestore from '@react-native-firebase/firestore';
 import { StackTypes } from '../../../routes';
 
 import { FontAwesome5 } from '@expo/vector-icons';
+import Cabecalho from '../../../components/header/header';
 
 const ListaProdutos = () => {
 
@@ -26,7 +27,7 @@ const ListaProdutos = () => {
             key: documentSnapshot.id,
           });
           setQtdPtodutos(querySnapshot.size)
-        });        
+        });
 
         setProdutos(produtos);
         setLoading(false);
@@ -41,44 +42,43 @@ const ListaProdutos = () => {
   }
 
   if (loading) {
-    return <ActivityIndicator size="large"/>;
+    return <ActivityIndicator size="large" />;
   }
 
   return (
+    <>
+      <Cabecalho />
+      <View style={styles.container}>
 
-    <View style={styles.container}>
+        <View style={styles.cabecalho}>
 
-      <View style={styles.cabecalho}>
-        
-        <Text style={styles.title}>Produtos cadastrados: {qtdProdutos}</Text>        
-        <TouchableOpacity style={styles.button} onPress={handleNovo}>
-          {/* <Text style={styles.buttonText}>Novo</Text> */}
-          <FontAwesome5 name="plus" size={24} color="blue" />
-        </TouchableOpacity>        
-      </View>
-      <FlatList
-        style={styles.list}
-        showsVerticalScrollIndicator={false}
-        data={produtos}
-        renderItem={({ item }) => <>
+          <Text style={styles.title}>Produtos cadastrados: {qtdProdutos}</Text>
+          <TouchableOpacity style={styles.button} onPress={handleNovo}>
+            {/* <Text style={styles.buttonText}>Novo</Text> */}
+            <FontAwesome5 name="plus" size={24} color="blue" />
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          style={styles.list}
+          showsVerticalScrollIndicator={false}
+          data={produtos}
+          renderItem={({ item }) => <>
 
-          <View style={styles.linhaSuperior}>
-            <Text style={styles.titleList}>Descrição</Text>
-            <Text style={styles.titleList}>Qtd.Mín.Estoque</Text>
-          </View>
-          <View style={styles.linhaSuperior}>
-            <Text style={styles.descricao}>{item.descricao}</Text>
-            <Text style={styles.descricao}>{item.qtd_minima}</Text>
-          </View>
+            <View style={styles.linhaSuperior}>
+              <Text style={styles.titleList}>Descrição</Text>
+              <Text style={styles.titleList}>Qtd.Mín.Estoque</Text>
+            </View>
+            <View style={styles.linhaSuperior}>
+              <Text style={styles.descricao}>{item.descricao}</Text>
+              <Text style={styles.descricao}>{item.qtd_minima}</Text>
+            </View>
 
-          <View style={styles.barra}>
-            <Text style={styles.titleList}>Cód. Barra</Text>
-            <Text>{item.barra}</Text>
-          </View>
-        </>        
-      }
-      />
-    </View>
+            <View style={styles.barra}>
+              <Text style={styles.titleList}>Cód. Barra</Text>
+              <Text>{item.barra}</Text>
+            </View>
+          </>} />
+      </View></>
   )
 }
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   titleList: {
     fontWeight: 'bold',
     fontSize: 16,
-},
+  },
   cabecalho: {
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, ActivityIndicator, Alert } from 'react-native'
 import React, { useState } from 'react'
 
 import firestore from '@react-native-firebase/firestore';
@@ -8,6 +8,7 @@ import { StackTypes } from '../../../routes';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup"
+import Cabecalho from '../../../components/header/header';
 
 const schema = yup.object({
     descricao: yup
@@ -42,7 +43,7 @@ const NovoProduto = () => {
                 barra: data.barra
             })
             .then(() => {
-                alert("Produto criado com sucesso!")
+                Alert.alert("Cadastro de Produto","Produto cadastrado com sucesso!")
             })
             .catch((erro) => {
                 console.log(`**** ${erro}`);
@@ -54,74 +55,77 @@ const NovoProduto = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Controller
-                control={control}
-                name='descricao'
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={[
-                            styles.input, {
-                                borderWidth: errors.descricao && 1,
-                                borderColor: errors.descricao && '#B0060E'
-                            }]}
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        placeholder="Descrição do produto"
-                    />
-                )}
-            />
-            {errors.descricao && <Text style={styles.labelError}>{errors.descricao?.message}</Text>}
+        <>
+            <Cabecalho />
+            <View style={styles.container}>
+                <Controller
+                    control={control}
+                    name='descricao'
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={[
+                                styles.input, {
+                                    borderWidth: errors.descricao && 1,
+                                    borderColor: errors.descricao && '#B0060E'
+                                }]}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            placeholder="Descrição do produto"
+                        />
+                    )}
+                />
+                {errors.descricao && <Text style={styles.labelError}>{errors.descricao?.message}</Text>}
 
-            <Controller
-                control={control}
-                name='qtdMinima'
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={[
-                            styles.input, {
-                                borderWidth: errors.qtdMinima && 1,
-                                borderColor: errors.qtdMinima && '#B0060E'
-                            }]}
-                        value={value?.toString()}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        keyboardType="numeric"
-                        placeholder="Quantidade mínima em estoque"
-                    />
-                )}
-            />
-            {errors.qtdMinima && <Text style={styles.labelError}>{errors.qtdMinima?.message}</Text>}
+                <Controller
+                    control={control}
+                    name='qtdMinima'
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={[
+                                styles.input, {
+                                    borderWidth: errors.qtdMinima && 1,
+                                    borderColor: errors.qtdMinima && '#B0060E'
+                                }]}
+                            value={value?.toString()}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            keyboardType="numeric"
+                            placeholder="Quantidade mínima em estoque"
+                        />
+                    )}
+                />
+                {errors.qtdMinima && <Text style={styles.labelError}>{errors.qtdMinima?.message}</Text>}
 
 
-            <Controller
-                control={control}
-                name='barra'
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={[
-                            styles.input, {
-                                borderWidth: errors.barra && 1,
-                                borderColor: errors.barra && '#B0060E'
-                            }]}
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        keyboardType="numeric"
-                        placeholder="Código de barra (EAN13)"
-                    />
-                )}
-            />
-            {errors.barra && <Text style={styles.labelError}>{errors.barra?.message}</Text>}
+                <Controller
+                    control={control}
+                    name='barra'
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            style={[
+                                styles.input, {
+                                    borderWidth: errors.barra && 1,
+                                    borderColor: errors.barra && '#B0060E'
+                                }]}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            keyboardType="numeric"
+                            placeholder="Código de barra (EAN13)"
+                        />
+                    )}
+                />
+                {errors.barra && <Text style={styles.labelError}>{errors.barra?.message}</Text>}
 
-            <TouchableOpacity style={styles.button} onPress={handleSubmit(handleCadastrar)}>
-                <Text style={styles.buttonText}>Salvar</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit(handleCadastrar)}>
+                    <Text style={styles.buttonText}>Salvar</Text>
+                </TouchableOpacity>
 
-            {isLoading && <ActivityIndicator size="large" />}
+                {isLoading && <ActivityIndicator size="large" />}
 
-        </View >
+            </View >
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { StackTypes } from '../../../routes';
 
 import { FontAwesome5 } from '@expo/vector-icons';
+import Cabecalho from '../../../components/header/header';
 
 const ListaMovimentacoes = () => {
 
@@ -43,42 +44,42 @@ const ListaMovimentacoes = () => {
   }
 
   return (
+    <>
+      <Cabecalho />
+      <View style={styles.container}>
 
-    <View style={styles.container}>
 
+        <View style={styles.cabecalho}>
+          <Text style={styles.title}>Últimas movimentações</Text>
+          <TouchableOpacity style={styles.button} onPress={handleNovo}>
+            {/* <Text style={styles.buttonText}>Novo</Text> */}
+            <FontAwesome5 name="plus" size={24} color="blue" />
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.cabecalho}>
-        <Text style={styles.title}>Últimas movimentações</Text>
-        <TouchableOpacity style={styles.button} onPress={handleNovo}>
-          {/* <Text style={styles.buttonText}>Novo</Text> */}
-          <FontAwesome5 name="plus" size={24} color="blue" />
-        </TouchableOpacity>
-      </View>
+        <FlatList
+          style={styles.list}
+          showsVerticalScrollIndicator={false}
+          data={movimentacoes}
+          renderItem={({ item }) => <>
 
-      <FlatList
-        style={styles.list}
-        showsVerticalScrollIndicator={false}
-        data={movimentacoes}
-        renderItem={({ item }) => <>
+            <View style={styles.linhaSuperior}>
+              <Text style={styles.date}>{item.date}</Text>
+              <Text style={styles.tipoPgto}>{item.paymentType}</Text>
+            </View>
 
-          <View style={styles.linhaSuperior}>
-            <Text style={styles.date}>{item.date}</Text>
-            <Text style={styles.tipoPgto}>{item.paymentType}</Text>
-          </View>
+            <View style={styles.content}>
 
-          <View style={styles.content}>
+              <Text style={styles.label}>{item.label}</Text>
 
-            <Text style={styles.label}>{item.label}</Text>
+              <Text style={item.type === 1 ? styles.value : styles.expenses}>
+                {item.type === 1 ? `R$ ${item.value}` : `R$ -${item.value}`}
+              </Text>
 
-            <Text style={item.type === 1 ? styles.value : styles.expenses}>
-              {item.type === 1 ? `R$ ${item.value.toFixed(2)}` : `R$ -${item.value.toFixed(2)}`}
-            </Text>
+            </View>
+          </>} />
 
-          </View>
-        </>}
-      />
-
-    </View>
+      </View></>
   )
 }
 

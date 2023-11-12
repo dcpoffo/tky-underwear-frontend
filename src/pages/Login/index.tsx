@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { StackTypes } from '../../routes';
@@ -12,7 +12,7 @@ const schema = yup.object({
   email: yup
     .string()
     .email("E-mail inválido").required("Informe seu e-mail"),
-    //patern    
+  //patern    
   password: yup
     .string()
     .min(6, "A senha deve ter no mínimo 6 digitos")
@@ -35,10 +35,16 @@ export default function Login() {
     auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then((result) => {
+        // auth().currentUser?.updateProfile({
+        //   displayName: "Darlan R. C. Poffo"
+        // })        
         console.log(result);
         navigation.navigate("Home");
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        Alert.alert('Login inválido','Algo deu errado! Verifique o Usuário e a Senha')
+      })
       .finally(() => {
         setIsLoading(false)
       })
@@ -72,11 +78,11 @@ export default function Login() {
         name='password'
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-          style={[
-            styles.input, {
-              borderWidth: errors.password && 1,
-              borderColor: errors.password && '#B0060E'
-            }]}
+            style={[
+              styles.input, {
+                borderWidth: errors.password && 1,
+                borderColor: errors.password && '#B0060E'
+              }]}
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
