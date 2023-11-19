@@ -1,12 +1,12 @@
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 
-import * as eva from '@eva-design/eva'
-import { ApplicationProvider } from '@ui-kitten/components'
+import { NativeBaseProvider, Box } from 'native-base';
 
 import Routes from './src/routes';
 
-import React, { useState, useEffect } from 'react';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import Home from './src/pages/Home';
 
@@ -20,13 +20,13 @@ export default function App() {
   }, []);
 
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
+    <NativeBaseProvider>
       <NavigationContainer>
         <StatusBar backgroundColor="#38C" barStyle={'light-content'} />
         {/* {user ? <Home/> : <Routes />} */}
         <Routes />
       </NavigationContainer>
-    </ApplicationProvider>
+    </NativeBaseProvider>
   );
 }
 

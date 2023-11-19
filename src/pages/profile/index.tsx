@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 
 import auth from '@react-native-firebase/auth';
 
-import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
-
 // auth().currentUser?.updateProfile({
 //   displayName: "Darlan R. C. Poffo"
 // })   
@@ -20,9 +18,7 @@ export default function Perfil() {
 
     useEffect(() => {
         setUserName(auth().currentUser?.displayName)
-    });
-
-    const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
+    });   
 
     return (
         <View style={styles.container}>
@@ -30,34 +26,7 @@ export default function Perfil() {
             <TextInput style={styles.input}
                 value={userName}
             />
-            <Layout
-                style={styles.content}
-                level='1'>
-                <Select
-                    selectedIndex={selectedIndex}
-                    onSelect={index => {
-                        setSelectedIndex(index)
-                    }}
-                >
-
-                    <SelectItem
-                        title='Option 1'
-                        onPressOut={() => {
-                            alert('teste 1')
-                        }} />
-                    <SelectItem
-                        title='Option 2'
-                        onPressOut={() => {
-                            alert('teste 2')
-                        }} />
-                    <SelectItem
-                        title='Option 3'
-                        onPressOut={() => {
-                            alert('teste 3')
-                        }} />
-
-                </Select>
-            </Layout>
+            
             <TouchableOpacity style={styles.button}
                 onPress={handleUpdate}>
                 <Text style={styles.buttonText}>Salvar Alterações</Text>

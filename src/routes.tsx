@@ -6,7 +6,7 @@ import React from "react";
 import ListaProdutos from "./pages/produtos/listar";
 import NovoProduto from "./pages/produtos/novo";
 import ListaMovimentacoes from "./pages/Movimentacoes/listar";
-import NovaMovimentacao from "./pages/Movimentacoes/novo";
+import NovaMovimentacao from "./pages/Movimentacoes/novo/index";
 import Perfil from "./pages/profile";
 
 const Stack = createNativeStackNavigator();
