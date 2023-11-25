@@ -9,10 +9,10 @@ export function Button( {title, ...rest }: Props) {
         <ButtonNativeBase 
         w={'full'}
         h={16}
-        bg={'red.700'}
+        bg={'blue.600'}
         borderRadius={10}
         _pressed={{
-            bg: 'red.400'
+            bg: 'blue.400'
         }}
 
         {...rest}

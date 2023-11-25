@@ -1,22 +1,23 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { Center, Heading, VStack } from 'native-base';
+import { Input } from '../../../components/Input';
+import { Button } from '../../../components/Button';
+import { Alert } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+
 import { StackTypes } from '../../../routes';
+
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { Input } from '../../../components/Input';
-import { Button } from '../../../components/Button';
-
 
 const schema = yup.object({
   label: yup
     .string()
-    .min(10, "No mínimo 10 caracteres")
-    .required("Informe a descrição da movimentação"),
+    .required("Informe a descrição da movimentação")
+    .min(5, "No mínimo 5 caracteres"),
   type: yup
     .string()
     .required("Informe o tipo da movimentação: 0 = Compra / 1 = Venda"),
@@ -41,12 +42,13 @@ type FormDataProps = {
 
 export default function NovaMovimentacao() {
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+  const { control, handleSubmit, formState: { errors }  } = useForm<FormDataProps>({
     resolver: yupResolver(schema)
   })
   const navigation = useNavigation<StackTypes>();
 
   function handleCadastrar(data: FormDataProps) {
+    console.log(data)
     firestore()
       .collection('movimentacoes')
       .add({
@@ -69,29 +71,79 @@ export default function NovaMovimentacao() {
   }
 
   return (
-    
-      <VStack flex={1} px={5}>
-        <Center>
-          <Heading /> 
 
-          <Controller
-            control={control}
-            name='label'
-            render={({ field: {onChange}}) => (
-              <Input placeholder='Descrição da movimentação' />
-            )}
-          />
+    <VStack flex={1} px={5}>
+      <Center>
+        <Heading />
 
-          <Input placeholder='Tipo da movimentação (0 = Compra / 1 = Venda)'/>
-          <Input placeholder='Data da Movimentação' />
-          <Input placeholder='Opção de pagamento' />
-          <Input placeholder='Valor da movimentação' />
+        <Controller
+          control={control}
+          name='label'          
+          render={({ field: { onChange } }) => (
+            <Input
+              placeholder='Descrição da movimentação'
+              onChangeText={onChange}
+              errorMessage={errors.label?.message}
+            />
+          )}
+        />
 
-          <Button title='Salvar'/>
+        <Controller
+          control={control}
+          name='type'
+          render={({ field: { onChange } }) => (
+            <Input
+              placeholder='Tipo da movimentação (0 = Compra / 1 = Venda)'
+              onChangeText={onChange}
+              errorMessage={errors.type?.message}
+            />
+          )}
+        />
 
-        </Center>
-      </VStack>
-    
-    
+        <Controller
+          control={control}
+          name='date'
+          render={({ field: { onChange } }) => (
+            <Input
+              placeholder='Data da Movimentação'
+              onChangeText={onChange}
+              errorMessage={errors.date?.message}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name='paymentType'
+          render={({ field: { onChange } }) => (
+            <Input
+              placeholder='Opção de pagamento'
+              onChangeText={onChange}
+              errorMessage={errors.paymentType?.message}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name='valor'
+          render={({ field: { onChange } }) => (
+            <Input
+              placeholder='Valor da movimentação'
+              onChangeText={onChange}
+              errorMessage={errors.valor?.message}
+            />
+          )}
+        />
+
+        <Button
+          title='Salvar'
+          onPress={handleSubmit(handleCadastrar)}
+        />
+
+      </Center>
+    </VStack>
+
+
   )
 }
