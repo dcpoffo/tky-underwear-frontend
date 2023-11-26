@@ -48,7 +48,6 @@ export default function ListaMovimentacoes() {
       <Cabecalho />
       <View style={styles.container}>
 
-
         <View style={styles.cabecalho}>
           <Text style={styles.title}>Últimas movimentações</Text>
           <TouchableOpacity style={styles.button} onPress={handleNovo}>

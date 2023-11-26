@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { StackTypes } from '../../routes';
@@ -7,6 +6,10 @@ import { StackTypes } from '../../routes';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
+import { Center, Heading, VStack, useToast } from 'native-base';
+import { Input } from '../../components/Input';
+import { Button } from '../../components/Button';
+import { Toast } from '../../components/Toast';
 
 const schema = yup.object({
   email: yup
@@ -19,9 +22,16 @@ const schema = yup.object({
     .required("Informe sua senha")
 })
 
+type FormDataProps = {
+  email: string,
+  password: string
+}
+
 export default function Login() {
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const toast = useToast();
+
+  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(schema)
   })
 
@@ -29,7 +39,7 @@ export default function Login() {
 
   const navigation = useNavigation<StackTypes>();
 
-  function handleLogin(data: any) {
+  function handleLogin(data: FormDataProps) {
     setIsLoading(true);
 
     auth()
@@ -43,7 +53,15 @@ export default function Login() {
       })
       .catch((error) => {
         console.log(error)
-        Alert.alert('Login inválido','Algo deu errado! Verifique o Usuário e a Senha')
+        //Alert.alert('Login inválido', 'Algo deu errado! Verifique o Usuário e a Senha')
+        toast.show({
+          description: 'Algo deu errado! Verifique o Usuário e a Senha',
+          placement: 'top',
+          bg: 'red.500',
+          fontSize: 'md'
+        })
+        
+
       })
       .finally(() => {
         setIsLoading(false)
@@ -51,98 +69,45 @@ export default function Login() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Seja bem vindo(a)!</Text>
 
-      <Controller
-        control={control}
-        name='email'
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[
-              styles.input, {
-                borderWidth: errors.email && 1,
-                borderColor: errors.email && '#B0060E'
-              }]}
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            placeholder="Digite seu e-mail"
-          />
-        )}
-      />
-      {errors.email && <Text style={styles.labelError}>{errors.email?.message}</Text>}
+    <VStack flex={1} px={5}>
+      <Center>
 
-      <Controller
-        control={control}
-        name='password'
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={[
-              styles.input, {
-                borderWidth: errors.password && 1,
-                borderColor: errors.password && '#B0060E'
-              }]}
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            placeholder="Digite sua senha"
+        <Heading my={24}>
+          Seja bem vindo(a)
+        </Heading>
+
+        <Controller
+          control={control}
+          name='email'
+          render={({ field: { onChange } }) => (
+            <Input
+              placeholder='Digite o seu E-mail'
+              onChangeText={onChange}
+              errorMessage={errors.email?.message}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name='password'
+          render={({ field: { onChange }}) => (
+            <Input
+            placeholder='Digite a sua senha'
             secureTextEntry={true}
-          />
-        )}
-      />
-      {errors.password && <Text style={styles.labelError}>{errors.password?.message}</Text>}
+            onChangeText={onChange}
+            errorMessage={errors.password?.message}
+            />
+          )}
+        />
 
+        <Button
+          title='Acessar'
+          onPress={handleSubmit(handleLogin)}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit(handleLogin)}>
-        <Text style={styles.buttonText}>Acessar</Text>
-      </TouchableOpacity>
-
-      {isLoading && <ActivityIndicator size="large" />}
-
-    </View>
+      </Center>
+    </VStack>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2f59f5'
-  },
-  title: {
-    marginBottom: 14,
-    fontSize: 20,
-  },
-  input: {
-    width: '95%',
-    height: 45,
-    backgroundColor: '#A7A7A7',
-    borderRadius: 10,
-    padding: 8,
-    fontSize: 18,
-    marginTop: 10,
-  },
-  button: {
-    width: '95%',
-    height: 45,
-    backgroundColor: '#B0060E',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#FFF'
-  },
-  labelError: {
-    alignSelf: 'flex-start',
-    color: '#B0060E',
-    marginBottom: 15,
-    marginTop: 2,
-    marginLeft: 20,
-    fontSize: 15,
-  }
-})

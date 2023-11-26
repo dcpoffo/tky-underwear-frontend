@@ -1,5 +1,5 @@
 import React from 'react';
-import { Center, Heading, VStack } from 'native-base';
+import { Center, Heading, VStack, useToast } from 'native-base';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 import { Alert } from 'react-native';
@@ -42,6 +42,8 @@ type FormDataProps = {
 
 export default function NovaMovimentacao() {
 
+  const toast = useToast();
+
   const { control, handleSubmit, formState: { errors }  } = useForm<FormDataProps>({
     resolver: yupResolver(schema)
   })
@@ -59,7 +61,13 @@ export default function NovaMovimentacao() {
         value: data.valor.replace(",", "."),
       })
       .then(() => {
-        Alert.alert("Cadastro de Movimentações", "Movimentação cadastrada com sucesso!")
+        //Alert.alert("Cadastro de Movimentações", "Movimentação cadastrada com sucesso!")
+        toast.show({
+          description: 'Movimentação cadastrada com sucesso!',
+          placement: 'top',
+          bg: 'green.500',
+          fontSize: 'md'
+        })
         console.log(data)
       })
       .catch((erro) => {
