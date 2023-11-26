@@ -1,8 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native'
-import React from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { StackTypes } from '../../routes';
+import { Center, VStack } from 'native-base';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Cabecalho from '../../components/header/header';
+import { StackTypes } from '../../routes';
+
+import { Button } from '../../components/Button';
 
 export default function Home() {
 
@@ -22,31 +25,33 @@ export default function Home() {
 
    return (
       <>
-         <Cabecalho/>
+         {/* <Cabecalho/> */}
+         <VStack 
+            flex={1} 
+            px={10}            
+            justifyContent= {'center'}            
+            >
+            <Center>               
 
-         <View style={styles.container}>
-            <View style={styles.content}>
-               <View style={styles.buttonContent}>
-
-                  <TouchableOpacity style={styles.button}
-                     onPress={handleMovimentacoes}>
-                     <Text style={styles.buttonText}>Movimentações</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.button}
-                     onPress={handleListProdutos}>
-                     <Text style={styles.buttonText}>Produtos</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={styles.button}
-                     onPress={handlePerfil}>
-                     <Text style={styles.buttonText}>Alterar Nome</Text>
-                  </TouchableOpacity>
-
-               </View>
-
-            </View>
-         </View>
+               <Button
+                  title='Movimentações'
+                  onPress={handleMovimentacoes}
+                  marginBottom={5}
+               />
+               <Button
+                  title='Produtos'
+                  onPress={handleListProdutos}
+                  marginBottom={5}
+               />
+               <Button
+                  title='Alterar nome'
+                  onPress={handlePerfil}
+                  marginBottom={5}
+               />
+                 
+            </Center>
+         </VStack>
+         
       </>
    )
 }
