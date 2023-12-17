@@ -1,16 +1,15 @@
+import { Box, Center, HStack, Radio, VStack, useToast, Text} from 'native-base';
 import React from 'react';
-import { Center, Heading, VStack, useToast } from 'native-base';
-import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
-import { Alert } from 'react-native';
+import { Input } from '../../../components/Input';
 
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 
 import { StackTypes } from '../../../routes';
 
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
 import * as yup from "yup";
 
 const schema = yup.object({
@@ -20,7 +19,7 @@ const schema = yup.object({
     .min(5, "No mínimo 5 caracteres"),
   type: yup
     .string()
-    .required("Informe o tipo da movimentação: 0 = Compra / 1 = Venda"),
+    .required("Informe o tipo da movimentação: 0 = Entrada / 1 = Saida"),
   valor: yup
     .string()
     .required('Informe o Valor'),
@@ -44,7 +43,7 @@ export default function NovaMovimentacao() {
 
   const toast = useToast();
 
-  const { control, handleSubmit, formState: { errors }  } = useForm<FormDataProps>({
+  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(schema)
   })
   const navigation = useNavigation<StackTypes>();
@@ -61,17 +60,21 @@ export default function NovaMovimentacao() {
         value: data.valor.replace(",", "."),
       })
       .then(() => {
-        //Alert.alert("Cadastro de Movimentações", "Movimentação cadastrada com sucesso!")
         toast.show({
           description: 'Movimentação cadastrada com sucesso!',
           placement: 'top',
           bg: 'green.500',
           fontSize: 'md'
         })
-        console.log(data)
       })
       .catch((erro) => {
         console.log(`**** ${erro}`);
+        toast.show({
+          description: 'Erro ao cadastrar movimentação!',
+          placement: 'top',
+          bg: 'red.500',
+          fontSize: 'md'
+        })
       })
       .finally(() => {
         navigation.goBack();
@@ -82,28 +85,62 @@ export default function NovaMovimentacao() {
 
     <VStack flex={1} px={5}>
       <Center>
-        <Heading />
-
         <Controller
           control={control}
-          name='label'          
+          name='type'
+          render={({ field: { onChange } }) => (
+            <Box
+              alignItems={'center'}
+              h={16}
+              w={'full'}
+              margin={5}
+              borderWidth={2}
+              borderColor={'gray.900'}
+              borderRadius={10}
+              justifyContent={'center'}
+            >
+              <Radio.Group
+                defaultValue="-1"
+                onChange={onChange}
+                name="myRadioGroup"
+              >
+                <HStack
+                  space={'1/4'}
+                >
+                  <Radio value="0" my={1} >
+                    Entrada
+                  </Radio>
+                  <Radio value="1" my={1}>
+                    Saida
+                  </Radio>
+
+                </HStack>
+                
+              </Radio.Group>
+            </Box>
+          )}
+          />
+          
+
+        {/* <Controller
+  control={control}
+  name='type'
+  render={({ field: { onChange } }) => (
+    <Input
+      placeholder='Tipo da movimentação (0 = Entrada / 1 = Saida)'
+      onChangeText={onChange}
+      errorMessage={errors.type?.message}
+    />
+  )}
+/> */}
+        <Controller
+          control={control}
+          name='label'
           render={({ field: { onChange } }) => (
             <Input
               placeholder='Descrição da movimentação'
               onChangeText={onChange}
               errorMessage={errors.label?.message}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name='type'
-          render={({ field: { onChange } }) => (
-            <Input
-              placeholder='Tipo da movimentação (0 = Compra / 1 = Venda)'
-              onChangeText={onChange}
-              errorMessage={errors.type?.message}
             />
           )}
         />

@@ -1,18 +1,18 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { StackTypes } from '../../../routes';
 
-import { FontAwesome5 } from '@expo/vector-icons';
-import Cabecalho from '../../../components/header/header';
+import { AntDesign } from '@expo/vector-icons';
+import { HStack, Icon, IconButton, Spinner, Text, VStack } from 'native-base';
 
 export default function ListaMovimentacoes() {
 
   const navigation = useNavigation<StackTypes>();
 
-  const [loading, setLoading] = useState(true);
-  const [movimentacoes, setMovimentacoes] = useState<any[]>([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ movimentacoes, setMovimentacoes ] = useState<any[]>([]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -31,12 +31,15 @@ export default function ListaMovimentacoes() {
         setLoading(false);
       });
 
-    // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, []);
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return (
+      <HStack flex={1} justifyContent={'center'}>
+        <Spinner size={'lg'} />
+      </HStack>
+    )
   }
 
   function handleNovo() {
@@ -45,114 +48,72 @@ export default function ListaMovimentacoes() {
 
   return (
     <>
-      <Cabecalho />
-      <View style={styles.container}>
+      <VStack flex={1} px={5}>
 
-        <View style={styles.cabecalho}>
-          <Text style={styles.title}>Últimas movimentações</Text>
-          <TouchableOpacity style={styles.button} onPress={handleNovo}>
-            {/* <Text style={styles.buttonText}>Novo</Text> */}
-            <FontAwesome5 name="plus" size={24} color="blue" />
-          </TouchableOpacity>
-        </View>
+        <HStack
+          justifyContent={'space-between'}
+          borderBottomWidth={2}
+          borderBottomColor={'#dadada'}
+          alignItems={'center'}
+          marginTop={5}
+        >
+          <Text
+            textAlign={'center'}
+            fontSize={18}
+            fontWeight={'bold'}
+            marginBottom={2}
+          >
+            Últimas movimentações
+          </Text>
+
+          <IconButton
+            icon={
+              <Icon as={AntDesign} name='plus' color={'black'} size={'sm'} />
+            }
+            variant={'outline'}
+            // size={'md'}
+            borderRadius={30}
+            _pressed={{ bg: 'blue.300' }}
+            onPress={handleNovo}
+          >
+          </IconButton>
+        </HStack>
 
         <FlatList
-          style={styles.list}
           showsVerticalScrollIndicator={false}
           data={movimentacoes}
           renderItem={({ item }) => <>
-
-            <View style={styles.linhaSuperior}>
-              <Text style={styles.date}>{item.date}</Text>
-              <Text style={styles.tipoPgto}>{item.paymentType}</Text>
-            </View>
-
-            <View style={styles.content}>
-
-              <Text style={styles.label}>{item.label}</Text>
-
-              <Text style={item.type === 1 ? styles.value : styles.expenses}>
-                {item.type === 1 ? `R$ ${item.value}` : `R$ -${item.value}`}
+            <HStack justifyContent={'space-between'}>
+              <Text color={'#2f59f5'} fontWeight={'bold'} fontSize={16} >
+                {item.date}
               </Text>
+              <Text color={'#2f59f5'} fontWeight={'bold'} fontSize={16} >
+                {item.paymentType}
+              </Text>
+            </HStack>
 
-            </View>
+            <HStack
+              justifyContent={'space-between'}
+              borderBottomWidth={5}
+              borderColor={'#dadada'}
+              marginBottom={4}
+            >
+              <Text fontSize={16}>{item.label}</Text>
+              {
+                item.type === 1 ?
+                  <Text color={'#2ecc71'} fontWeight= {'bold'}>
+                    R$ {item.value}
+                  </Text>
+                  :
+                  <Text color={'#e74c3c'} fontWeight= {'bold'}>
+                    R$ - {item.value}
+                  </Text>
+              }
+
+            </HStack>
           </>} />
 
-      </View></>
+      </VStack>
+    </>    
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 24,
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-    margin: 14,
-  },
-  list: {
-    marginStart: 14,
-    marginEnd: 14,
-  },
-  content: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 2,
-    marginBottom: 8,
-    borderBottomWidth: 1,
-    borderColor: '#2f59f5',
-  },
-  linhaSuperior: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 2,
-    marginBottom: 8
-  },
-  date: {
-    color: '#2f59f5',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  tipoPgto: {
-    color: '#2f59f5',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  label: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  value: {
-    fontSize: 16,
-    color: '#2ecc71',
-    fontWeight: 'bold',
-  },
-  expenses: {
-    fontSize: 16,
-    color: '#e74c3c',
-    fontWeight: 'bold',
-  },
-  cabecalho: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 24,
-    borderBottomWidth: 2,
-    borderBottomColor: '#dadada'
-  },
-  button: {
-    height: 30,
-    width: 30,
-    // backgroundColor: '#B0060E',
-    // borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#FFF',
-  },
-})

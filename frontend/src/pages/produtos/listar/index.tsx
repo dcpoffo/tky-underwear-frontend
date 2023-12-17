@@ -1,19 +1,19 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
-import { useNavigation } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 import { StackTypes } from '../../../routes';
 
-import { FontAwesome5 } from '@expo/vector-icons';
-import Cabecalho from '../../../components/header/header';
+import { FlatList, HStack, Icon, IconButton, Spinner, Text, VStack } from 'native-base';
+
+import { AntDesign } from '@expo/vector-icons';
 
 export default function ListaProdutos() {
 
   const navigation = useNavigation<StackTypes>();
-  const [loading, setLoading] = useState(true);
-  const [produtos, setProdutos] = useState<any[]>([]);
-  const [qtdProdutos, setQtdPtodutos] = useState(0);
+  const [ loading, setLoading ] = useState(true);
+  const [ produtos, setProdutos ] = useState<any[]>([]);
+  const [ qtdProdutos, setQtdPtodutos ] = useState(0);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -42,100 +42,79 @@ export default function ListaProdutos() {
   }
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return (
+      <HStack flex={1} justifyContent={'center'}>
+        <Spinner size={'lg'} />
+      </HStack>
+    )
   }
 
   return (
     <>
-      <Cabecalho />
-      <View style={styles.container}>
+      {/* <Cabecalho /> */}
+      <VStack flex={1} px={5}>
 
-        <View style={styles.cabecalho}>
+        <HStack
+          justifyContent={'space-between'}
+          borderBottomWidth={2}
+          borderBottomColor={'#dadada'}
+          alignItems={'center'}
+          marginTop={5}
+        >
+          <Text
+            textAlign={'center'}
+            fontSize={18}
+            fontWeight={'bold'}
+            marginBottom={2}
+          >
+            Produtos Cadastrados: {qtdProdutos}
+          </Text>
+          
+          <IconButton
+            icon={
+              <Icon as={AntDesign} name='plus' color={'black'} size={'sm'}/>
+            }
+            variant={'outline'}
+            // size={'md'}
+            borderRadius={30}
+            _pressed={{ bg: 'blue.300' }}
+            onPress={handleNovo}
+          >
+          </IconButton>
 
-          <Text style={styles.title}>Produtos cadastrados: {qtdProdutos}</Text>
-          <TouchableOpacity style={styles.button} onPress={handleNovo}>
-            {/* <Text style={styles.buttonText}>Novo</Text> */}
-            <FontAwesome5 name="plus" size={24} color="blue" />
-          </TouchableOpacity>
-        </View>
+        </HStack>
+
         <FlatList
-          style={styles.list}
           showsVerticalScrollIndicator={false}
           data={produtos}
-          renderItem={({ item }) => <>
+          renderItem={({ item }) =>
+            <>
+              <HStack justifyContent={'space-between'}>
+                <Text fontWeight={'bold'} fontSize={16}>
+                  Descrição
+                </Text>
+                <Text fontWeight={'bold'} fontSize={16}>
+                  Qtd.Mín.Estoque
+                </Text>
+              </HStack>
 
-            <View style={styles.linhaSuperior}>
-              <Text style={styles.titleList}>Descrição</Text>
-              <Text style={styles.titleList}>Qtd.Mín.Estoque</Text>
-            </View>
-            <View style={styles.linhaSuperior}>
-              <Text style={styles.descricao}>{item.descricao}</Text>
-              <Text style={styles.descricao}>{item.qtd_minima}</Text>
-            </View>
+              <HStack justifyContent={'space-between'}>
+                <Text fontSize={16}>{item.descricao}</Text>
+                <Text fontSize={16}>{item.qtd_minima}</Text>
+              </HStack>
 
-            <View style={styles.barra}>
-              <Text style={styles.titleList}>Cód. Barra</Text>
-              <Text>{item.barra}</Text>
-            </View>
-          </>} />
-      </View></>
+              <VStack
+                justifyContent={'space-between'}
+                borderBottomWidth={5}
+                borderColor={'#dadada'}
+                marginBottom={4}
+              >
+                <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
+                <Text>{item.barra}</Text>
+              </VStack>
+            </>
+          } />
+      </VStack>
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 24,
-  },
-  button: {
-    height: 30,
-    width: 30,
-    // backgroundColor: '#B0060E',
-    // borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#FFF',
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-    margin: 14,
-  },
-  titleList: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  cabecalho: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 24,
-    borderBottomWidth: 2,
-    borderBottomColor: '#dadada'
-  },
-  list: {
-    marginStart: 10,
-    marginEnd: 10,
-  },
-  linhaSuperior: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 2,
-    marginBottom: 8
-  },
-  barra: {
-    justifyContent: 'space-between',
-    marginTop: 2,
-    marginBottom: 8,
-    borderBottomWidth: 5,
-    borderColor: '#dadada',
-  },
-  descricao: {
-    // fontWeight: 'bold',
-    fontSize: 16,
-  }
-})

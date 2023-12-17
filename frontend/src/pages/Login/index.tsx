@@ -9,7 +9,6 @@ import * as yup from 'yup';
 import { Center, Heading, VStack, useToast } from 'native-base';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
-import { Toast } from '../../components/Toast';
 
 const schema = yup.object({
   email: yup
@@ -43,7 +42,7 @@ export default function Login() {
     setIsLoading(true);
 
     auth()
-      .signInWithEmailAndPassword(data.email, data.password)
+      .signInWithEmailAndPassword(data.email, data.password)      
       .then((result) => {
         // auth().currentUser?.updateProfile({
         //   displayName: "Darlan R. C. Poffo"
@@ -59,8 +58,7 @@ export default function Login() {
           placement: 'top',
           bg: 'red.500',
           fontSize: 'md'
-        })
-        
+        })        
 
       })
       .finally(() => {

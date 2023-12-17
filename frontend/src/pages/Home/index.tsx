@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Center, VStack } from 'native-base';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import Cabecalho from '../../components/header/header';
 import { StackTypes } from '../../routes';
 
@@ -19,9 +19,15 @@ export default function Home() {
       navigation.navigate("Movimentacoes");
    }
 
-   function handlePerfil() {
-      navigation.navigate("Perfil");
-   }
+   // function handlePerfil() {
+   //    navigation.navigate("Perfil");
+   // }   
+
+   function handleSignOut() {        
+      auth().signOut().then(() => {
+         navigation.navigate("Login");
+      });
+  }
 
    return (
       <>
@@ -43,9 +49,14 @@ export default function Home() {
                   onPress={handleListProdutos}
                   marginBottom={5}
                />
-               <Button
+               {/* <Button
                   title='Alterar nome'
                   onPress={handlePerfil}
+                  marginBottom={5}
+               /> */}
+               <Button
+                  title='Sair'
+                  onPress={handleSignOut}
                   marginBottom={5}
                />
                  
@@ -56,62 +67,62 @@ export default function Home() {
    )
 }
 
-const styles = StyleSheet.create({
-   header: {
-      backgroundColor: '#e6e8ed',
-      height: '10%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 10
-   },
-   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#2f59f5'
-   },
-   content: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      height: '100%',
-      backgroundColor: '#f0f0f0'
-   },
-   title: {
-      fontWeight: 'bold',
-      fontSize: 20,
-   },
-   button: {
-      height: 50,
-      width: '70%',
-      backgroundColor: '#2f59f5',
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 10,
-   },
-   buttonHeader: {
-      height: 30,
-      width: 30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 10,
-   },
-   buttonText: {
-      fontSize: 20,
-      color: '#FFF'
-   },
-   buttonLogout: {
-      size: 24,
-      backgroundColor: "#B0060E",
-      color: "#FFF"
-   },
-   buttonContent: {
-      height: '30%',
-      width: '70%',
-      justifyContent: "flex-start",
-      alignItems: 'center',
-      flexDirection: "column"
-   }
-})
+// const styles = StyleSheet.create({
+//    header: {
+//       backgroundColor: '#e6e8ed',
+//       height: '10%',
+//       flexDirection: 'row',
+//       justifyContent: 'space-between',
+//       alignItems: 'center',
+//       padding: 10
+//    },
+//    container: {
+//       flex: 1,
+//       alignItems: 'center',
+//       justifyContent: 'center',
+//       backgroundColor: '#2f59f5'
+//    },
+//    content: {
+//       alignItems: 'center',
+//       justifyContent: 'center',
+//       width: '100%',
+//       height: '100%',
+//       backgroundColor: '#f0f0f0'
+//    },
+//    title: {
+//       fontWeight: 'bold',
+//       fontSize: 20,
+//    },
+//    button: {
+//       height: 50,
+//       width: '70%',
+//       backgroundColor: '#2f59f5',
+//       borderRadius: 10,
+//       justifyContent: 'center',
+//       alignItems: 'center',
+//       margin: 10,
+//    },
+//    buttonHeader: {
+//       height: 30,
+//       width: 30,
+//       justifyContent: 'center',
+//       alignItems: 'center',
+//       margin: 10,
+//    },
+//    buttonText: {
+//       fontSize: 20,
+//       color: '#FFF'
+//    },
+//    buttonLogout: {
+//       size: 24,
+//       backgroundColor: "#B0060E",
+//       color: "#FFF"
+//    },
+//    buttonContent: {
+//       height: '30%',
+//       width: '70%',
+//       justifyContent: "flex-start",
+//       alignItems: 'center',
+//       flexDirection: "column"
+//    }
+// })

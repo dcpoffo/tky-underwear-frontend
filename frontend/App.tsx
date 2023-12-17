@@ -22,7 +22,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <StatusBar backgroundColor="#38C" barStyle={'light-content'} />
+        <StatusBar backgroundColor="#38C" barStyle={'light-content'} />          
         {/* {user ? <Home/> : <Routes />} */}
         <Routes />
       </NavigationContainer>
