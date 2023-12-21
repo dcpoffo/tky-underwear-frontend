@@ -1,4 +1,5 @@
 {
+  "scheme": "com.tkyunderwear",
   "hostType": "lan",
   "lanType": "ip",
   "devClient": true,
