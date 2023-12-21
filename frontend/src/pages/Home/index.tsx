@@ -19,9 +19,9 @@ export default function Home() {
       navigation.navigate("Movimentacoes");
    }
 
-   // function handlePerfil() {
-   //    navigation.navigate("Perfil");
-   // }   
+   function handlePerfil() {
+      navigation.navigate("Perfil");
+   }   
 
    function handleSignOut() {        
       auth().signOut().then(() => {
@@ -49,11 +49,11 @@ export default function Home() {
                   onPress={handleListProdutos}
                   marginBottom={5}
                />
-               {/* <Button
-                  title='Alterar nome'
+               <Button
+                  title='Teste Spring'
                   onPress={handlePerfil}
                   marginBottom={5}
-               /> */}
+               />
                <Button
                   title='Sair'
                   onPress={handleSignOut}
