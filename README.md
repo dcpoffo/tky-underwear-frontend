@@ -1,4 +1,4 @@
-# TKY-UNDERWEAR
+# TKY-UNDERWEAR - Frontend
 App para Cadastro de Produtos e Movimentações Financeiras para uso particular
 
 * [React-native](https://reactnative.dev)
