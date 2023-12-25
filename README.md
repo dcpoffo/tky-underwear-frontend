@@ -2,7 +2,7 @@
 App para Cadastro de Produtos e Movimentações Financeiras para uso particular
 
 * [React-native](https://reactnative.dev)
-* [React](https://react.dev)
+* [NativeBase](https://docs.nativebase.io/getting-started)
 * [Expo](https://expo.dev)
 * [Firebase](https://console.firebase.google.com/u/0/)
 * [Firestore](https://firebase.google.com/docs/firestore?hl=pt-br)
