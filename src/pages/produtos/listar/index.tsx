@@ -7,6 +7,7 @@ import { StackTypes } from '../../../routes';
 import { FlatList, HStack, Icon, IconButton, Spinner, Text, VStack } from 'native-base';
 
 import { AntDesign } from '@expo/vector-icons';
+import { useAPI } from '../../../service/API';
 
 export default function ListaProdutos() {
 
@@ -15,27 +16,47 @@ export default function ListaProdutos() {
   const [ produtos, setProdutos ] = useState<any[]>([]);
   const [ qtdProdutos, setQtdPtodutos ] = useState(0);
 
+  const api = useAPI();
+
+  // useEffect(() => {
+  //   const subscriber = firestore()
+  //     .collection('produtos')
+  //     .onSnapshot(querySnapshot => {
+  //       const produtos: any[] = [];
+
+  //       querySnapshot.forEach(documentSnapshot => {
+  //         produtos.push({
+  //           ...documentSnapshot.data(),
+  //           key: documentSnapshot.id,
+  //         });
+  //         setQtdPtodutos(querySnapshot.size)
+  //       });
+
+  //       setProdutos(produtos);
+  //       setLoading(false);
+  //     });
+
+  //   // Unsubscribe from events when no longer in use
+  //   return () => subscriber();
+  // }, []);
+
   useEffect(() => {
-    const subscriber = firestore()
-      .collection('produtos')
-      .onSnapshot(querySnapshot => {
-        const produtos: any[] = [];
+    loadProducts();
+  }, [])
 
-        querySnapshot.forEach(documentSnapshot => {
-          produtos.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-          setQtdPtodutos(querySnapshot.size)
-        });
+  const loadProducts = async () => {
 
-        setProdutos(produtos);
-        setLoading(false);
-      });
-
-    // Unsubscribe from events when no longer in use
-    return () => subscriber();
-  }, []);
+    try {
+      const result = await api.get("/produtos");
+      console.log(result.data);
+      setProdutos(result.data);
+    } catch (e) {
+      console.log(e);
+    }
+    finally {
+      setLoading(false);
+    }
+  };
 
   function handleNovo() {
     navigation.navigate("NovoProduto");
@@ -69,10 +90,10 @@ export default function ListaProdutos() {
           >
             Produtos Cadastrados: {qtdProdutos}
           </Text>
-          
+
           <IconButton
             icon={
-              <Icon as={AntDesign} name='plus' color={'black'} size={'sm'}/>
+              <Icon as={AntDesign} name='plus' color={'black'} size={'sm'} />
             }
             variant={'outline'}
             // size={'md'}
@@ -86,8 +107,8 @@ export default function ListaProdutos() {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={produtos}
-          renderItem={({ item }) =>
+          data={produtos}          
+          renderItem={({ item, index }) =>
             <>
               <HStack justifyContent={'space-between'}>
                 <Text fontWeight={'bold'} fontSize={16}>

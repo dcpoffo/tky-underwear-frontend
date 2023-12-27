@@ -1,6 +1,5 @@
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-
 import auth from '@react-native-firebase/auth';
 import { useAPI } from '../../service/API';
 import { Text, FlatList, HStack, VStack, Spinner } from 'native-base';
@@ -19,17 +18,31 @@ export default function Perfil() {
         barraCli: ""
     })
 
+    const api = useAPI();
+
     function handleUpdate() {
         auth().currentUser?.updateProfile({
             displayName: userName
         })
     }
-    const api = useAPI();
 
     useEffect(() => {
         //setUserName(auth().currentUser?.displayName)
         loadProducts();
     }, []);
+
+    // async function loadProducts(){
+    //     try {
+    //         const response = await api.get("/produtos")            
+    //         console.log(response.data)
+    //         setLoading(false)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //     finally {
+    //         setLoading(false)
+    //     }
+    // }
 
     const loadProducts = async () => {
 
@@ -40,18 +53,18 @@ export default function Perfil() {
         } catch (e) {
             console.log(e);
         }
-        finally{
+        finally {
             setLoading(false);
         }
     };
 
     if (loading) {
         return (
-          <HStack flex={1} justifyContent={'center'}>
-            <Spinner size={'lg'} />
-          </HStack>
+            <HStack flex={1} justifyContent={'center'}>
+                <Spinner size={'lg'} />
+            </HStack>
         )
-      }
+    }
 
     return (
         <VStack flex={1}>

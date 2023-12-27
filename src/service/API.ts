@@ -1,23 +1,28 @@
 import axios from 'axios'
 
+// export const api = axios.create({
+//   baseURL: 'https://tky-underwear-backend.vercel.app'  
+// })
+
 export const useAPI = () => {
 
-  const URL_BASE = "http://192.168.1.8:8080";  
-
+  //const baseURL = "http://192.168.1.8:8080";  
+  const baseURL = "https://tky-underwear-backend.vercel.app";  
+  
   const get = (url: string) => {
-    return axios.get(URL_BASE + url)
+    return axios.get(baseURL + url)
   }
 
   const post = (url: string, data: any) => {
-    return axios.post(URL_BASE + url, data)
+    return axios.post(baseURL + url, data)
   }
 
   const put = (url: string, data: any) => {
-      return axios.put(URL_BASE + url, data)    
+      return axios.put(baseURL + url, data)    
   }
 
   const _delete = (url: string) => { 
-      return axios.delete(URL_BASE + url)
+      return axios.delete(baseURL + url)
   }
 
   return { get, post, put, _delete}
