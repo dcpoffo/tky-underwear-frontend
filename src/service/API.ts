@@ -7,7 +7,7 @@ import axios from 'axios'
 export const useAPI = () => {
 
   //const baseURL = "http://192.168.1.8:8080";  
-  const baseURL = "https://tky-underwear-backend.vercel.app";  
+  const baseURL = "https://tky-underwear-backend.vercel.app";    
   
   const get = (url: string) => {
     return axios.get(baseURL + url)

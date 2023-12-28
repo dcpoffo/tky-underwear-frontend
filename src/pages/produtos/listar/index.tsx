@@ -47,9 +47,8 @@ export default function ListaProdutos() {
   const loadProducts = async () => {
 
     try {
-      const result = await api.get("/produtos");
-      console.log(result.data);
-      setProdutos(result.data);
+      const result = await api.get("/produtos");      
+      setProdutos(result.data);      
     } catch (e) {
       console.log(e);
     }

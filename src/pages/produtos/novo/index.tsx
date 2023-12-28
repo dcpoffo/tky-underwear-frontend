@@ -11,20 +11,21 @@ import * as yup from "yup"
 import { Center, Heading, VStack, useToast } from 'native-base';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button'
+import { useAPI } from '../../../service/API';
 
 const schema = yup.object({
     descricao: yup
         .string().min(5, "Descrição com no mínimo 5 caracteres")
-        .required("Informe a descrição"),        
+        .required("Informe a descrição"),
     qtdMinima: yup
-        .string().default('0'),        
+        .number().default(0),
     barra: yup
-        .string().default('0'),      
+        .string().default('0'),
 })
 
 type FormDataProps = {
     descricao: string;
-    qtdMinima: string;
+    qtdMinima: number;
     barra: string;
 }
 
@@ -36,36 +37,83 @@ export default function NovoProduto() {
         resolver: yupResolver(schema),
     })
 
+    const api = useAPI();
+
     const navigation = useNavigation<StackTypes>();
 
-    function handleCadastrar(data: FormDataProps) {
-        firestore()
-            .collection('produtos')
-            .add({
+    async function handleCadastrar(data: FormDataProps) {
+        console.log(data.descricao);
+        console.log(data.qtdMinima);
+        console.log(data.barra);
+
+        try {
+            const response = await api.post("/produto", {
                 descricao: data.descricao,
                 qtd_minima: data.qtdMinima,
                 barra: data.barra
             })
-            .then(() => {
-                toast.show({
-                    description: 'Produto cadastrado com sucesso!',
-                    placement: 'top',
-                    bg: 'green.500',
-                    fontSize: 'md'
-                })
-            })
-            .catch((erro) => {
-                console.log(`**** ${erro}`);
-                toast.show({
-                    description: 'Erro ao cadastrar produto!',
-                    placement: 'top',
-                    bg: 'red.500',
-                    fontSize: 'md'
-                })
-            })
-            .finally(() => {
-                navigation.goBack();
-            })
+            console.log(response.data);
+            
+        } catch (error: any) {
+            console.log(error.message)
+        }
+        // try {
+        //     const response = await api.post("/produto", {
+        //         descricao: data.descricao,
+        //         qtd_minima: data.qtdMinima,
+        //         barra: data.barra
+        //     })
+        //     console.log(response.data);
+
+        //     if (response.data){
+        //         toast.show({
+        //             description: 'Produto cadastrado com sucesso!',
+        //             placement: 'top',
+        //             bg: 'green.500',
+        //             fontSize: 'md'
+        //         })
+        //     }
+
+        // } catch (erro) {
+        //     console.log(`**** ${erro}`);
+        //     toast.show({
+        //         description: 'Erro ao cadastrar produto!',
+        //         placement: 'top',
+        //         bg: 'red.500',
+        //         fontSize: 'md'
+        //     })
+        // }
+        // finally {
+        //     navigation.goBack();
+        // }
+
+        // firestore()
+        //     .collection('produtos')
+        //     .add({
+        //         descricao: data.descricao,
+        //         qtd_minima: data.qtdMinima,
+        //         barra: data.barra
+        //     })
+        //     .then(() => {
+        //         toast.show({
+        //             description: 'Produto cadastrado com sucesso!',
+        //             placement: 'top',
+        //             bg: 'green.500',
+        //             fontSize: 'md'
+        //         })
+        //     })
+        //     .catch((erro) => {
+        //         console.log(`**** ${erro}`);
+        //         toast.show({
+        //             description: 'Erro ao cadastrar produto!',
+        //             placement: 'top',
+        //             bg: 'red.500',
+        //             fontSize: 'md'
+        //         })
+        //     })
+        //     .finally(() => {
+        //         navigation.goBack();
+        //     })
     }
 
     return (
@@ -116,6 +164,6 @@ export default function NovoProduto() {
                     onPress={handleSubmit(handleCadastrar)}
                 />
             </Center>
-        </VStack>          
+        </VStack>
     )
 }

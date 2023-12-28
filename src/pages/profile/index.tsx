@@ -44,6 +44,7 @@ export default function Perfil() {
     //     }
     // }
 
+    
     const loadProducts = async () => {
 
         try {
