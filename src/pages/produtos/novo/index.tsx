@@ -42,9 +42,6 @@ export default function NovoProduto() {
     const navigation = useNavigation<StackTypes>();
 
     async function handleCadastrar(data: FormDataProps) {
-        console.log(data.descricao);
-        console.log(data.qtdMinima);
-        console.log(data.barra);
 
         try {
             const response = await api.post("/produto", {
@@ -53,39 +50,28 @@ export default function NovoProduto() {
                 barra: data.barra
             })
             console.log(response.data);
-            
-        } catch (error: any) {
-            console.log(error.message)
+
+            if (response.data) {
+                toast.show({
+                    description: 'Produto cadastrado com sucesso!',
+                    placement: 'top',
+                    bg: 'green.500',
+                    fontSize: 'md'
+                })
+            }
+
+        } catch (erro) {
+            console.log(`**** ${erro}`);
+            toast.show({
+                description: 'Erro ao cadastrar produto!',
+                placement: 'top',
+                bg: 'red.500',
+                fontSize: 'md'
+            })
         }
-        // try {
-        //     const response = await api.post("/produto", {
-        //         descricao: data.descricao,
-        //         qtd_minima: data.qtdMinima,
-        //         barra: data.barra
-        //     })
-        //     console.log(response.data);
-
-        //     if (response.data){
-        //         toast.show({
-        //             description: 'Produto cadastrado com sucesso!',
-        //             placement: 'top',
-        //             bg: 'green.500',
-        //             fontSize: 'md'
-        //         })
-        //     }
-
-        // } catch (erro) {
-        //     console.log(`**** ${erro}`);
-        //     toast.show({
-        //         description: 'Erro ao cadastrar produto!',
-        //         placement: 'top',
-        //         bg: 'red.500',
-        //         fontSize: 'md'
-        //     })
-        // }
-        // finally {
-        //     navigation.goBack();
-        // }
+        finally {
+            navigation.goBack();
+        }
 
         // firestore()
         //     .collection('produtos')
