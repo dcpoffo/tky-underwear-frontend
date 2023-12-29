@@ -8,6 +8,7 @@ import { FlatList, HStack, Icon, IconButton, Spinner, Text, VStack } from 'nativ
 
 import { AntDesign } from '@expo/vector-icons';
 import { useAPI } from '../../../service/API';
+import { Button } from '../../../components/Button';
 
 export default function ListaProdutos() {
 
@@ -42,13 +43,14 @@ export default function ListaProdutos() {
 
   useEffect(() => {
     loadProducts();
-  }, [])
+  }, [ produtos ])
 
   const loadProducts = async () => {
 
     try {
-      const result = await api.get("/produtos");      
-      setProdutos(result.data);      
+      const result = await api.get("/produtos");
+      setProdutos(result.data);
+      setQtdPtodutos(produtos.length)
     } catch (e) {
       console.log(e);
     }
@@ -72,10 +74,21 @@ export default function ListaProdutos() {
   return (
     <>
       {/* <Cabecalho /> */}
-      <VStack flex={1} px={5}>
+      <VStack
+        flex={1}
+        px={5}
+        justifyContent={"center"}
+      >
 
-        <HStack
-          justifyContent={'space-between'}
+        <Button
+          title='Novo Produto'
+          onPress={handleNovo}
+          marginTop={3}
+          marginBottom={3}
+        />
+
+        {/* <HStack
+          // justifyContent={'space-between'}
           borderBottomWidth={2}
           borderBottomColor={'#dadada'}
           alignItems={'center'}
@@ -92,9 +105,9 @@ export default function ListaProdutos() {
 
           <IconButton
             icon={
-              <Icon as={AntDesign} name='plus' color={'black'} size={'sm'} />
+              <Icon as={AntDesign} name='plus' fontWeight={'bold'} color={'white'} size={'sm'} />
             }
-            variant={'outline'}
+            variant={'solid'}            
             // size={'md'}
             borderRadius={30}
             _pressed={{ bg: 'blue.300' }}
@@ -102,11 +115,11 @@ export default function ListaProdutos() {
           >
           </IconButton>
 
-        </HStack>
+        </HStack> */}
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={produtos}          
+          data={produtos}
           renderItem={({ item, index }) =>
             <>
               <HStack justifyContent={'space-between'}>

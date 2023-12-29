@@ -16,7 +16,7 @@ export function Button( {title, ...rest }: Props) {
         }}
 
         {...rest}
-        >            
+        >   
             <Text
             color={'#FFF'}
             fontSize={20}

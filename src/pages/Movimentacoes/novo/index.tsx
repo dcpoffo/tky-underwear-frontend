@@ -120,19 +120,7 @@ export default function NovaMovimentacao() {
             </Box>
           )}
           />
-          
-
-        {/* <Controller
-  control={control}
-  name='type'
-  render={({ field: { onChange } }) => (
-    <Input
-      placeholder='Tipo da movimentação (0 = Entrada / 1 = Saida)'
-      onChangeText={onChange}
-      errorMessage={errors.type?.message}
-    />
-  )}
-/> */}
+        
         <Controller
           control={control}
           name='label'

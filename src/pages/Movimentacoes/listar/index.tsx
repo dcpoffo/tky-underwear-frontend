@@ -6,6 +6,8 @@ import { StackTypes } from '../../../routes';
 
 import { AntDesign } from '@expo/vector-icons';
 import { HStack, Icon, IconButton, Spinner, Text, VStack } from 'native-base';
+import { Button } from '../../../components/Button';
+import { useAPI } from '../../../service/API';
 
 export default function ListaMovimentacoes() {
 
@@ -14,25 +16,44 @@ export default function ListaMovimentacoes() {
   const [ loading, setLoading ] = useState(true);
   const [ movimentacoes, setMovimentacoes ] = useState<any[]>([]);
 
+  const api = useAPI();
+
+  // useEffect(() => {
+  //   const subscriber = firestore()
+  //     .collection('movimentacoes')
+  //     .onSnapshot(querySnapshot => {
+  //       const movimentacoes: any[] = [];
+
+  //       querySnapshot.forEach(documentSnapshot => {
+  //         movimentacoes.push({
+  //           ...documentSnapshot.data(),
+  //           key: documentSnapshot.id,
+  //         });
+
+  //       });
+  //       setMovimentacoes(movimentacoes);
+  //       setLoading(false);
+  //     });
+
+  //   return () => subscriber();
+  // }, []);
+
   useEffect(() => {
-    const subscriber = firestore()
-      .collection('movimentacoes')
-      .onSnapshot(querySnapshot => {
-        const movimentacoes: any[] = [];
+    loadProducts();
+  }, [ movimentacoes ])
 
-        querySnapshot.forEach(documentSnapshot => {
-          movimentacoes.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+  const loadProducts = async () => {
 
-        });
-        setMovimentacoes(movimentacoes);
-        setLoading(false);
-      });
-
-    return () => subscriber();
-  }, []);
+    try {
+      const result = await api.get("/movimentacoes");
+      setMovimentacoes(result.data);      
+    } catch (e) {
+      console.log(e);
+    }
+    finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -49,8 +70,15 @@ export default function ListaMovimentacoes() {
   return (
     <>
       <VStack flex={1} px={5}>
-
-        <HStack
+        
+        <Button                  
+          title='Nova movimentação'
+          onPress={handleNovo}
+          marginTop={3}
+          marginBottom={3}
+        />
+        
+        {/* <HStack
           justifyContent={'space-between'}
           borderBottomWidth={2}
           borderBottomColor={'#dadada'}
@@ -77,7 +105,7 @@ export default function ListaMovimentacoes() {
             onPress={handleNovo}
           >
           </IconButton>
-        </HStack>
+        </HStack> */}
 
         <FlatList
           showsVerticalScrollIndicator={false}
