@@ -61,8 +61,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
     }
   };
 
-  function handleNovo() {
-    //navigation.navigate("NovoProduto");
+  function handleNovo() {    
     navigate("NovoProduto");
   }
 
@@ -105,8 +104,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                     descricao: item.descricao,
                     qtd_minima: item.qtd_minima,
                     barra: item.barra
-                  }
-                  //navigation.navigate("EditarProduto", { userId: item.id })
+                  }                  
                   navigate("EditarProduto", {item})
                   
                 }}
