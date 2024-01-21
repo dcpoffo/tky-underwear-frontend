@@ -93,8 +93,8 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          //data={produtos}
-          data={listaProdutos}
+          data={produtos}
+          //data={listaProdutos}
           renderItem={({ item }) =>
             <>
               <Pressable
