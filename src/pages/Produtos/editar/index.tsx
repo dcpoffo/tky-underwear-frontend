@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 import { StackTypes } from '../../../routes';
@@ -17,28 +17,47 @@ const schema = yup.object({
     descricao: yup
         .string().min(5, "Descrição com no mínimo 5 caracteres")
         .required("Informe a descrição"),
-    qtdMinima: yup
-        .number().default(0),
+    qtd_minima: yup
+        .number().default(0)
+        .transform((value) => (isNaN(value) || value === null || value === undefined) ? 0 : value),
     barra: yup
-        .string().default('0'),
+        .string().default(''),
 })
 
 type FormDataProps = {
     descricao: string;
-    qtdMinima: number;
+    qtd_minima: number;
     barra: string;
 }
 
 export default function EditarProduto({ route }) {
 
-    console.log(route.params.item)
-    const produtoSelecionado = route.params.item;
+    const id = route.params.item.id;
+
+    const [ descricao, setDescricao ] = useState('');
+    const [ qtdMinima, setQtdMinima ] = useState(0);
+    const [ barra, setBarra ] = useState('0');
 
     const toast = useToast();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+    const { control, setValue, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
         resolver: yupResolver(schema),
+        defaultValues: {
+            descricao: descricao,
+            qtd_minima: qtdMinima,
+            barra: barra,
+        }
     })
+
+    useEffect(() => {
+        if (!route.params)
+            return;
+
+        setValue('descricao', route.params.item.descricao);
+        setValue('qtd_minima', route.params.item.qtd_minima);
+        setValue('barra', route.params.item.barra);
+
+    }, [ route.params.item, setValue ])
 
     const api = useAPI();
 
@@ -46,10 +65,12 @@ export default function EditarProduto({ route }) {
 
     async function handleAtualizar(data: FormDataProps) {
 
+        console.log(data.descricao);
+
         try {
-            const response = await api.put(`/produto?id=${produtoSelecionado.id}`, {
+            const response = await api.put(`/produto?id=${id}`, {
                 descricao: data.descricao,
-                qtd_minima: data.qtdMinima,
+                qtd_minima: data.qtd_minima,
                 barra: data.barra
             })
             console.log(response.data);
@@ -85,26 +106,26 @@ export default function EditarProduto({ route }) {
                 <Controller
                     control={control}
                     name='descricao'
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                         <Input
                             placeholder="Descrição do produto"
                             onChangeText={onChange}
+                            value={value || descricao}
                             errorMessage={errors.descricao?.message}
-                            value={produtoSelecionado.descricao}
                         />
                     )}
                 />
 
                 <Controller
                     control={control}
-                    name='qtdMinima'
-                    render={({ field: { onChange } }) => (
+                    name='qtd_minima'
+                    render={({ field: { onChange, value } }) => (
                         <Input
                             placeholder="Quantidade mínima em estoque"
                             onChangeText={onChange}
+                            value={value.toString() || qtdMinima.toString()}
                             keyboardType="numeric"
-                            errorMessage={errors.qtdMinima?.message}
-                            value={produtoSelecionado.qtd_minima}
+                            errorMessage={errors.qtd_minima?.message}
                         />
                     )}
                 />
@@ -112,13 +133,13 @@ export default function EditarProduto({ route }) {
                 <Controller
                     control={control}
                     name='barra'
-                    render={({ field: { onChange } }) => (
+                    render={({ field: { onChange, value } }) => (
                         <Input
                             placeholder="Código de barra (EAN13)"
                             onChangeText={onChange}
+                            value={value || barra}
                             keyboardType="numeric"
                             errorMessage={errors.barra?.message}
-                            value={produtoSelecionado.barra}
                         />
                     )}
                 />
@@ -130,5 +151,5 @@ export default function EditarProduto({ route }) {
             </Center>
         </VStack>
     )
-    
+
 }

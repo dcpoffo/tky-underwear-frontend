@@ -19,19 +19,20 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
   const api = useAPI();
   const toast = useToast();
+  
   useEffect(() => {
     loadProducts();
   }, [ produtos ])
 
   const listaProdutos = [
     {
-      id: 1,
+      id: 19,
       descricao: 'produto 1',
       qtd_minima: '1',
       barra: '1'
     },
     {
-      id: 2,
+      id: 20,
       descricao: 'produto 2',
       qtd_minima: '2',
       barra: '2'
@@ -93,8 +94,8 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={produtos}
-          //data={listaProdutos}
+          //data={produtos}
+          data={listaProdutos}
           renderItem={({ item }) =>
             <>
               <Pressable
