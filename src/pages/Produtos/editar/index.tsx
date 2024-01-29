@@ -65,8 +65,6 @@ export default function EditarProduto({ route }) {
 
     async function handleAtualizar(data: FormDataProps) {
 
-        console.log(data.descricao);
-
         try {
             const response = await api.put(`/produto?id=${id}`, {
                 descricao: data.descricao,

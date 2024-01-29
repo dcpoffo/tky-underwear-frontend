@@ -94,8 +94,8 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
         <FlatList
           showsVerticalScrollIndicator={false}
-          //data={produtos}
-          data={listaProdutos}
+          data={produtos}
+          //data={listaProdutos}
           renderItem={({ item }) =>
             <>
               <Pressable
@@ -108,7 +108,8 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                   }                  
                   navigate("EditarProduto", {item})
                   
-                }}
+                }}               
+
                 rounded="8"
                 overflow="hidden"
                 borderWidth="1"
@@ -134,10 +135,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                 </HStack>
 
                 <VStack
-                  justifyContent={'space-between'}
-                // borderBottomWidth={5}
-                // borderColor={'#dadada'}
-                // marginBottom={4}
+                  justifyContent={'space-between'}                
                 >
                   <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
                   <Text>{item.barra}</Text>
