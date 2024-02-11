@@ -16,17 +16,13 @@ import { useAPI } from '../../../service/API';
 const schema = yup.object({
     descricao: yup
         .string().min(5, "Descrição com no mínimo 5 caracteres")
-        .required("Informe a descrição"),
-    qtd_minima: yup
-        .number().default(0)
-        .transform((value) => (isNaN(value) || value === null || value === undefined) ? 0 : value),
+        .required("Informe a descrição"),    
     barra: yup
         .string().default(''),
 })
 
 type FormDataProps = {
-    descricao: string;
-    qtd_minima: number;
+    descricao: string;    
     barra: string;
 }
 
@@ -34,18 +30,16 @@ export default function EditarProduto({ route }) {
 
     const id = route.params.item.id;
 
-    const [ descricao, setDescricao ] = useState('');
-    const [ qtdMinima, setQtdMinima ] = useState(0);
-    const [ barra, setBarra ] = useState('0');
+    const [ descricao, setDescricao ] = useState('');    
+    const [ barra, setBarra ] = useState('');
 
     const toast = useToast();
 
     const { control, setValue, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
         resolver: yupResolver(schema),
         defaultValues: {
-            descricao: descricao,
-            qtd_minima: qtdMinima,
-            barra: barra,
+            descricao: '',
+            barra: '',
         }
     })
 
@@ -54,7 +48,6 @@ export default function EditarProduto({ route }) {
             return;
 
         setValue('descricao', route.params.item.descricao);
-        setValue('qtd_minima', route.params.item.qtd_minima);
         setValue('barra', route.params.item.barra);
 
     }, [ route.params.item, setValue ])
@@ -68,7 +61,6 @@ export default function EditarProduto({ route }) {
         try {
             const response = await api.put(`/produto?id=${id}`, {
                 descricao: data.descricao,
-                qtd_minima: data.qtd_minima,
                 barra: data.barra
             })
             console.log(response.data);
@@ -112,21 +104,7 @@ export default function EditarProduto({ route }) {
                             errorMessage={errors.descricao?.message}
                         />
                     )}
-                />
-
-                <Controller
-                    control={control}
-                    name='qtd_minima'
-                    render={({ field: { onChange, value } }) => (
-                        <Input
-                            placeholder="Quantidade mínima em estoque"
-                            onChangeText={onChange}
-                            value={value.toString() || qtdMinima.toString()}
-                            keyboardType="numeric"
-                            errorMessage={errors.qtd_minima?.message}
-                        />
-                    )}
-                />
+                />                
 
                 <Controller
                     control={control}

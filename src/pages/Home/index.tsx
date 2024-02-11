@@ -17,6 +17,10 @@ export default function Home() {
         navigation.navigate('Movimentacoes');
     }
 
+    function handleCores() {
+        navigation.navigate('Cores');
+    }
+
     return (
         <VStack flex={1} alignItems={'center'} justifyContent={'center'} margin={4}>
 
@@ -25,6 +29,12 @@ export default function Home() {
                 onPress={handleProdutos}
                 marginBottom={5}
             />
+            <Button
+                title="Cores"
+                onPress={handleCores}
+                marginBottom={5}
+
+            />  
             <Button
                 title="Movimentações"                
                 onPress={handleMovimentacoes}

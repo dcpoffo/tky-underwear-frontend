@@ -17,15 +17,13 @@ const schema = yup.object({
     descricao: yup
         .string().min(5, "Descrição com no mínimo 5 caracteres")
         .required("Informe a descrição"),
-    qtdMinima: yup
-        .number().default(0),
+    
     barra: yup
         .string().default('0'),
 })
 
 type FormDataProps = {
     descricao: string;
-    qtdMinima: number;
     barra: string;
 }
 
@@ -46,7 +44,6 @@ export default function NovoProduto() {
         try {
             const response = await api.post("/produto", {
                 descricao: data.descricao,
-                qtd_minima: data.qtdMinima,
                 barra: data.barra
             })
             console.log(response.data);
@@ -89,20 +86,7 @@ export default function NovoProduto() {
                             errorMessage={errors.descricao?.message}
                         />
                     )}
-                />
-
-                <Controller
-                    control={control}
-                    name='qtdMinima'
-                    render={({ field: { onChange } }) => (
-                        <Input
-                            placeholder="Quantidade mínima em estoque"
-                            onChangeText={onChange}
-                            keyboardType="numeric"
-                            errorMessage={errors.qtdMinima?.message}
-                        />
-                    )}
-                />
+                />                
 
                 <Controller
                     control={control}

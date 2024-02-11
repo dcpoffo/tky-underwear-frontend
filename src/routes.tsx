@@ -9,6 +9,8 @@ import NovoProduto from "./pages/Produtos/novo";
 import ListaMovimentacoes from "./pages/Movimentacoes/listar";
 import NovaMovimentacao from "./pages/Movimentacoes/novo";
 import EditarProduto from "./pages/Produtos/editar";
+import NovaCor from "./pages/Cores/novo";
+import ListaCores from "./pages/Cores/listar";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,7 @@ type StackNavigation = {
     EditarProduto: undefined;
     Movimentacoes: undefined;
     NovaMovimentacao: undefined;
+    Cores: undefined;
     Perfil: undefined;
 };
 
@@ -40,10 +43,6 @@ function Routes() {
                 name="Home"
                 component={Home}
                 options={{ headerShown: false }} />
-                
-            {/* <Stack.Screen name="Home">
-                {(props) => <HomeScreen {...props} extraData={someData} />}
-            </Stack.Screen> */}
 
              <Stack.Screen
                 name="Produtos"
@@ -70,6 +69,19 @@ function Routes() {
                 component={NovaMovimentacao}
                 options={{ title: "Nova Movimentação" }}
             />
+
+            <Stack.Screen
+                name="Cores"
+                component={ListaCores}
+                options={{ title: "Lista de Cores" }}
+            />
+
+            <Stack.Screen
+                name="NovaCor"
+                component={NovaCor}
+                options={{ title: "Nova Cor" }}
+            />
+
             {/*
             <Stack.Screen
                 name="Perfil"

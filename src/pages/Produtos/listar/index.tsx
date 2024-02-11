@@ -28,23 +28,19 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
     {
       id: 19,
       descricao: 'produto 1',
-      qtd_minima: '1',
       barra: '1'
     },
     {
       id: 20,
       descricao: 'produto 2',
-      qtd_minima: '2',
       barra: '2'
     }, {
       id: 3,
       descricao: 'produto 3',
-      qtd_minima: '3',
       barra: '3'
     }, {
       id: 4,
       descricao: 'produto 4',
-      qtd_minima: '4',
       barra: '4'
     }
   ]
@@ -102,8 +98,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                 onPress={() => {
                   const produtoSelecionado = {
                     id: item.id,
-                    descricao: item.descricao,
-                    qtd_minima: item.qtd_minima,
+                    descricao: item.descricao,                    
                     barra: item.barra
                   }                  
                   navigate("EditarProduto", {item})
@@ -121,25 +116,15 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
 
                 <HStack justifyContent={'space-between'}>
-                  <Text fontWeight={'bold'} fontSize={16}>
-                    Descrição
-                  </Text>
-                  <Text fontWeight={'bold'} fontSize={16}>
-                    Qtd.Mín.Estoque
-                  </Text>
+                  <Text fontWeight={'bold'} fontSize={16}>Descrição</Text>
+                  <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
                 </HStack>
 
                 <HStack justifyContent={'space-between'}>
                   <Text fontSize={16}>{item.descricao}</Text>
-                  <Text fontSize={16}>{item.qtd_minima}</Text>
+                  <Text fontSize={16}>{item.barra}</Text>
                 </HStack>
-
-                <VStack
-                  justifyContent={'space-between'}                
-                >
-                  <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
-                  <Text>{item.barra}</Text>
-                </VStack>
+                
               </Pressable>
             </>
           } />
