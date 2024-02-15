@@ -2,18 +2,12 @@
 /* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
-
-import { useNavigation } from '@react-navigation/native';
-import { StackTypes } from '../../../routes';
-
 import { FlatList, HStack, Pressable, Spinner, Text, VStack, useToast } from 'native-base';
-
 import { Button } from '../../../components/Button';
 import { useAPI } from '../../../service/API';
 
 export default function ListaProdutos({ navigation: { navigate } } ) {
 
-  // const navigation = useNavigation<StackTypes>();
   const [ loading, setLoading ] = useState(true);
   const [ produtos, setProdutos ] = useState<any[]>([]);
 

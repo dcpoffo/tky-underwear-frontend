@@ -76,6 +76,7 @@ export default function NovoProduto() {
         <VStack flex={1} px={5}>
             <Center>
                 <Heading />
+                
                 <Controller
                     control={control}
                     name='descricao'
