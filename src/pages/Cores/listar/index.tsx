@@ -14,26 +14,7 @@ export default function ListaCores({ navigation: { navigate } }) {
 
     useEffect(() => {
         loadCores();
-    }, [ cores ])
-
-    const listaCores = [
-        {
-            id: 1,
-            descricao: 'Cor 1'
-        },
-        {
-            id: 2,
-            descricao: 'Cor 2'
-        },
-        {
-            id: 3,
-            descricao: 'Cor 3'
-        },
-        {
-            id: 4,
-            descricao: 'Cor 4'
-        }
-    ]
+    }, [ cores ])    
 
     const loadCores = async () => {
 
@@ -89,7 +70,7 @@ export default function ListaCores({ navigation: { navigate } }) {
                                     id: item.id,
                                     descricao: item.descricao,
                                 }
-                                // navigate("EditarProduto", { item })
+                                navigate("EditarCor", { item })
 
                             }}
 

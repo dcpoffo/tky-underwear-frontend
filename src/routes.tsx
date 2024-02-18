@@ -11,6 +11,7 @@ import NovaMovimentacao from "./pages/Movimentacoes/novo";
 import EditarProduto from "./pages/Produtos/editar";
 import NovaCor from "./pages/Cores/novo";
 import ListaCores from "./pages/Cores/listar";
+import EditarCor from "./pages/Cores/editar";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,8 @@ type StackNavigation = {
     Movimentacoes: undefined;
     NovaMovimentacao: undefined;
     Cores: undefined;
+    NovaCor: undefined;
+    EditarCor: undefined;
     Perfil: undefined;
 };
 
@@ -57,7 +60,7 @@ function Routes() {
             <Stack.Screen
                 name="EditarProduto"
                 component={EditarProduto}
-                options={{ title: 'Editar Produtos' }} />
+                options={{ title: 'Editar Produto' }} />
 
             <Stack.Screen
                 name="Movimentacoes"
@@ -80,6 +83,12 @@ function Routes() {
                 name="NovaCor"
                 component={NovaCor}
                 options={{ title: "Nova Cor" }}
+            />
+
+            <Stack.Screen
+                name="EditarCor"
+                component={EditarCor}
+                options={{ title: "Editar Cor" }}
             />
 
             {/*
