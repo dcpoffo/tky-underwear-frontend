@@ -12,6 +12,7 @@ import EditarProduto from "./pages/Produtos/editar";
 import NovaCor from "./pages/Cores/novo";
 import ListaCores from "./pages/Cores/listar";
 import EditarCor from "./pages/Cores/editar";
+import Teste from "./pages/teste";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ type StackNavigation = {
     NovaCor: undefined;
     EditarCor: undefined;
     Perfil: undefined;
+    TelaTeste: undefined;
 };
 
 export type StackTypes = NativeStackNavigationProp<StackNavigation>
@@ -90,13 +92,12 @@ function Routes() {
                 component={EditarCor}
                 options={{ title: "Editar Cor" }}
             />
-
-            {/*
+            
             <Stack.Screen
-                name="Perfil"
-                component={Perfil}
-                options={{ title: "Suas informações" }}
-            /> */}
+                name="TelaTeste"
+                component={Teste}
+                options={{ title: "Testes" }}
+            />
 
         </Stack.Navigator>
     )

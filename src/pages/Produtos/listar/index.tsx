@@ -43,7 +43,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
     try {
       const result = await api.get("/produtos");
-      setProdutos(result.data);
+      setProdutos(result.data);    
     } catch (e) {
       console.log(e);
     }
@@ -60,7 +60,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
     return (
       <VStack flex={1} justifyContent={'center'} alignItems={'center'}>
         <Text marginBottom={5} fontSize={16} fontWeight={'bold'}>
-          Carregando informações
+          Carregando informações...
         </Text>
         <Spinner size={'lg'} />
       </VStack>
@@ -92,7 +92,10 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                 onPress={() => {
                   const produtoSelecionado = {
                     id: item.id,
-                    descricao: item.descricao,                    
+                    descricao: item.descricao, 
+                    tipo: item.tipo,
+                    modelagem: item.modelagem,
+                    grade: item.grade,                   
                     barra: item.barra
                   }                  
                   navigate("EditarProduto", {item})
@@ -107,17 +110,30 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                 p="2"
                 marginBottom={2}
               >
-
-
                 <HStack justifyContent={'space-between'}>
                   <Text fontWeight={'bold'} fontSize={16}>Descrição</Text>
-                  <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
+                  <Text fontWeight={'bold'} fontSize={16}>Tipo</Text>                  
                 </HStack>
 
                 <HStack justifyContent={'space-between'}>
                   <Text fontSize={16}>{item.descricao}</Text>
-                  <Text fontSize={16}>{item.barra}</Text>
+                  <Text fontSize={16}>{item.tipo}</Text>
                 </HStack>
+
+                <HStack justifyContent={'space-between'}>
+                  <Text fontWeight={'bold'} fontSize={16}>Modelagem</Text>
+                  <Text fontWeight={'bold'} fontSize={16}>Grade</Text>
+                </HStack>
+
+                <HStack justifyContent={'space-between'}>
+                  <Text fontSize={16}>{item.modelagem}</Text>
+                  <Text fontSize={16}>{item.grade}</Text>
+                </HStack>
+
+                <VStack>
+                  <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
+                  <Text fontSize={16}>{item.barra}</Text>                  
+                </VStack>
                 
               </Pressable>
             </>

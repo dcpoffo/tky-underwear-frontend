@@ -1,10 +1,6 @@
 /* eslint-disable */
 import axios from 'axios'
 
-// export const api = axios.create({
-//   baseURL: 'https://tky-underwear-backend.vercel.app'  
-// })
-
 export const useAPI = () => {
 
   //const baseURL = "http://192.168.1.8:3333";  

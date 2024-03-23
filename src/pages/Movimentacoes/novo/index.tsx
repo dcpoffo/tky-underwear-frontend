@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Box, Center, HStack, Radio, VStack, useToast, Text} from 'native-base';
+import { Box, Center, HStack, Radio, VStack, useToast, Text, WarningOutlineIcon } from 'native-base';
 import React from 'react';
 import { Button } from '../../../components/Button';
 import { Input } from '../../../components/Input';
@@ -20,9 +20,10 @@ const schema = yup.object({
     .min(5, "No mínimo 5 caracteres"),
   type: yup
     .string()
-    .required("Informe o tipo da movimentação: 0 = Entrada / 1 = Saida"),
+    .oneOf([ '0', '1' ], "Selecione Entrada ou Saída")
+    .required("Selecione a movimentação: Entrada / Saida"),
   valor: yup
-    .number().default(0)
+    .number()
     .required('Informe o Valor'),
   paymentType: yup
     .string()
@@ -59,7 +60,7 @@ export default function NovaMovimentacao() {
         type: data.type,
         valor: data.valor,
         paymentType: data.paymentType,
-        date:data.date
+        date: data.date
       })
       console.log(response.data);
 
@@ -83,13 +84,13 @@ export default function NovaMovimentacao() {
     }
     finally {
       navigation.goBack();
-    }    
-    
+    }
+
   }
 
   return (
 
-    <VStack flex={1} px={5}>
+    <VStack flex={1} px={2}>
       <Center>
         <Controller
           control={control}
@@ -99,39 +100,52 @@ export default function NovaMovimentacao() {
               alignItems={'center'}
               h={16}
               w={'full'}
-              margin={5}
               borderWidth={2}
-              borderColor={'gray.900'}
+              borderColor={errors.type ? 'red.500' : 'gray.900'}
               borderRadius={10}
               justifyContent={'center'}
             >
               <Radio.Group
                 defaultValue="-1"
                 onChange={onChange}
-                name="myRadioGroup"
+                name="radioGroupTipo"
               >
-                <HStack
-                  space={'1/4'}
-                >
+                <HStack space={'1/4'}>
                   <Radio value="0" my={1} >
                     Entrada
                   </Radio>
                   <Radio value="1" my={1}>
                     Saida
                   </Radio>
-
                 </HStack>
-                
               </Radio.Group>
             </Box>
           )}
-          />
-        
+        />
+        {errors.type && (
+          <HStack mt={1} alignItems="center"           
+          mr={'1/5'}
+          >
+            <WarningOutlineIcon size="xs" color="red.500"/>
+            <Text
+              fontSize={12}
+              color="red.500"
+              textAlign="right"
+              ml={1}              
+              //mr={12}
+            >
+              {errors.type.message}
+            </Text>
+          </HStack>
+        )}
+
+
         <Controller
           control={control}
           name='label'
           render={({ field: { onChange } }) => (
             <Input
+              marginTop={4}
               placeholder='Descrição da movimentação'
               onChangeText={onChange}
               errorMessage={errors.label?.message}
