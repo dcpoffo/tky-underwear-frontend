@@ -13,6 +13,8 @@ import NovaCor from "./pages/Cores/novo";
 import ListaCores from "./pages/Cores/listar";
 import EditarCor from "./pages/Cores/editar";
 import Teste from "./pages/teste";
+import ListaEstoque from "./pages/Estoque/listar";
+import NovaMovimentacaoEstoque from "./pages/Estoque/novo";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,9 +26,10 @@ type StackNavigation = {
     EditarProduto: undefined;
     Movimentacoes: undefined;
     NovaMovimentacao: undefined;
-    Cores: undefined;
-    NovaCor: undefined;
-    EditarCor: undefined;
+
+    ListaEstoque: undefined;
+    NovaMovimentacaoEstoque: undefined;
+
     Perfil: undefined;
     TelaTeste: undefined;
 };
@@ -49,7 +52,7 @@ function Routes() {
                 component={Home}
                 options={{ headerShown: false }} />
 
-             <Stack.Screen
+            <Stack.Screen
                 name="Produtos"
                 component={ListaProdutos}
                 options={{ title: 'Lista de Produtos' }} />
@@ -76,23 +79,17 @@ function Routes() {
             />
 
             <Stack.Screen
-                name="Cores"
-                component={ListaCores}
-                options={{ title: "Lista de Cores" }}
+                name="ListaEstoque"
+                component={ListaEstoque}
+                options={{ title: "Movimentação de Estoque" }}
             />
 
             <Stack.Screen
-                name="NovaCor"
-                component={NovaCor}
-                options={{ title: "Nova Cor" }}
+                name="NovaMovimentacaoEstoque"
+                component={NovaMovimentacaoEstoque}
+                options={{ title: "Entrada / Saida de Estoque"}}
             />
 
-            <Stack.Screen
-                name="EditarCor"
-                component={EditarCor}
-                options={{ title: "Editar Cor" }}
-            />
-            
             <Stack.Screen
                 name="TelaTeste"
                 component={Teste}

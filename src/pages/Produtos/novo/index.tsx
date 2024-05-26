@@ -39,9 +39,9 @@ const schema = yup.object({
 
 type FormDataProps = {
     descricao: string;
-    tipo: string;
-    modelagem: string;
-    grade: string;
+    tipo: 'ADULTO' | 'INFANTIL';
+    modelagem: 'BASICA' | 'BOXER' | 'E30';
+    grade: 'P' | 'M' | 'G' | 'GG' | 'XGG';
     barra: string;
 }
 
@@ -140,16 +140,12 @@ export default function NovoProduto() {
                 />
                 {errors.tipo && (
                     <Box alignSelf={'stretch'}>
-                        <HStack mt={2} alignItems="center"
-                        // mr={'10'}
-                        >
+                        <HStack mt={2} alignItems="center">
                             <WarningOutlineIcon size="xs" color="red.500" />
                             <Text
                                 fontSize={12}
-                                color="red.500"
-                                // textAlign="right"
-                                ml={1}
-                            //mr={12}
+                                color="red.500"                                
+                                ml={1}                            
                             >
                                 {errors.tipo.message}
                             </Text>

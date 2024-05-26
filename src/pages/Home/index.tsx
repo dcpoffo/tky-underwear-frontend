@@ -17,9 +17,9 @@ export default function Home() {
         navigation.navigate('Movimentacoes');
     }
 
-    // function handleCores() {
-    //     navigation.navigate('Cores');
-    // }
+    function handleEstoque() {
+        navigation.navigate('ListaEstoque');
+    }
 
     function handleTestes() {
         navigation.navigate('TelaTeste')
@@ -33,25 +33,18 @@ export default function Home() {
                 onPress={handleProdutos}
                 marginBottom={5}
             />
+            <Button
+                title="Entrada/Saida Estoque "
+                onPress={handleEstoque}
+                marginBottom={5}
+
+            />                
+
             {/* <Button
-                title="Cores"
-                onPress={handleCores}
-                marginBottom={5}
-
-            />   */}
-            <Button
-                title="Movimentações"                
-                onPress={handleMovimentacoes}
-                marginBottom={5}
-
-            />     
-
-            <Button
                 title="Tela de Testes"
                 onPress={handleTestes}
                 marginBottom={5}
-
-            />           
+            />            */}
         </VStack>
     )
 }

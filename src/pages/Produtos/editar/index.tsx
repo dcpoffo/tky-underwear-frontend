@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import React, { useEffect, useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
@@ -39,9 +40,9 @@ const schema = yup.object({
 
 type FormDataProps = {
     descricao: string;
-    tipo: string;
-    modelagem: string;
-    grade: string;
+    tipo: 'ADULTO' | 'INFANTIL';
+    modelagem: 'BASICA' | 'BOXER' | 'E30';
+    grade: 'P' | 'M' | 'G' | 'GG' | 'XGG';
     barra: string;
 }
 
@@ -316,6 +317,7 @@ export default function EditarProduto({ route }) {
                     name='barra'
                     render={({ field: { onChange, value } }) => (
                         <Input
+                        marginTop={4}
                             placeholder="Código de barra (EAN13)"
                             onChangeText={onChange}
                             value={value || barra}

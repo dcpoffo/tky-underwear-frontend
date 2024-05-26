@@ -69,11 +69,7 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
 
   return (
     <>
-      <VStack
-        flex={1}
-        px={2}
-        justifyContent={"center"}
-      >
+      <VStack flex={1} px={2} justifyContent={"center"} >
 
         <Button
           title='Novo Produto'
@@ -96,7 +92,8 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                     tipo: item.tipo,
                     modelagem: item.modelagem,
                     grade: item.grade,                   
-                    barra: item.barra
+                    barra: item.barra,
+                    qtdEstoque: item.qtdEstoque
                   }                  
                   navigate("EditarProduto", {item})
                   
@@ -130,10 +127,16 @@ export default function ListaProdutos({ navigation: { navigate } } ) {
                   <Text fontSize={16}>{item.grade}</Text>
                 </HStack>
 
-                <VStack>
+                <HStack justifyContent={'space-between'}>
                   <Text fontWeight={'bold'} fontSize={16}>Cód. Barra</Text>
-                  <Text fontSize={16}>{item.barra}</Text>                  
-                </VStack>
+                  <Text fontWeight={'bold'} fontSize={16}>Qtd. Estoque</Text>
+                </HStack>
+
+                <HStack justifyContent={'space-between'}>                  
+                  <Text fontSize={16}>{item.barra}</Text>
+                  <Text fontSize={16}>{item.qtdEstoque | 0}</Text>
+                </HStack>
+
                 
               </Pressable>
             </>
