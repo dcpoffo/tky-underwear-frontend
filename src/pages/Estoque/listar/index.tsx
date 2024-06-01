@@ -73,7 +73,7 @@ export default function ListaEstoque() {
                                 rounded={"8"}
                                 overflow={"hidden"}
                                 borderWidth={1}
-                                borderColor={"coolGray.300"}
+                                borderColor={"coolGray.400"}
                                 p={2}
                                 marginBottom={2}
                             >
@@ -82,11 +82,11 @@ export default function ListaEstoque() {
 
                                     <VStack>
                                         <HStack>
-                                            <Text color={'#2f59f5'} fontWeight={'bold'} fontSize={16}>Tipo: </Text>
+                                            {/* <Text color={'#2f59f5'} fontWeight={'bold'} fontSize={16}>Tipo: </Text> */}
                                             {
                                                 item.tipo === '0'
-                                                    ? <Text fontSize={16} color={'#2ecc71'}>{item.descricao}</Text>
-                                                    : <Text fontSize={16} color={'#e74c3c'}>{item.descricao}</Text>
+                                                    ? <Text fontSize={16} color={'#2ecc71'}>Entrada</Text>
+                                                    : <Text fontSize={16} color={'#e74c3c'}>Saida</Text>
                                             }
                                         </HStack>
                                     </VStack>
@@ -103,6 +103,11 @@ export default function ListaEstoque() {
                                         </HStack>
                                     </VStack>
                                     
+                                </HStack>
+
+                                <HStack>
+                                    <Text color={'#2f59f5'} fontWeight={'bold'} fontSize={16}>Descrição: </Text>
+                                    <Text fontSize={16}>{item.descricao} </Text>
                                 </HStack>
 
                                 <HStack>

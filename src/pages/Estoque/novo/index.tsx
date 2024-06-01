@@ -66,7 +66,7 @@ export default function NovaMovimentacaoEstoque() {
     const carregarProdutos = async () => {
         try {
             const result = await api.get("/produtos");
-            console.log("Produtos carregados:", result.data); // Log para verificar os dados
+            // console.log("Produtos carregados:", result.data); // Log para verificar os dados
             setProdutos(result.data);
         } catch (e) {
             console.log("Erro ao carregar produtos:", e);
@@ -82,7 +82,7 @@ export default function NovaMovimentacaoEstoque() {
                 descricao: data.descricao,
                 quantidade: data.quantidade
             });
-            console.log(response.data);
+            // console.log(response.data);
 
             if (!response.data.errors) {
                 toast.show({
@@ -121,7 +121,7 @@ export default function NovaMovimentacaoEstoque() {
     return (
         <VStack flex={1} px={3}>
             <Center>
-                <Heading>Nova Movimentação de Estoque</Heading>
+                <Heading mt={2} mb={2}>Nova Movimentação de Estoque</Heading>
 
                 <Controller
                     control={control}

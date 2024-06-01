@@ -12,7 +12,7 @@ import EditarProduto from "./pages/Produtos/editar";
 import NovaCor from "./pages/Cores/novo";
 import ListaCores from "./pages/Cores/listar";
 import EditarCor from "./pages/Cores/editar";
-import Teste from "./pages/teste";
+import Teste from "./pages/Teste";
 import ListaEstoque from "./pages/Estoque/listar";
 import NovaMovimentacaoEstoque from "./pages/Estoque/novo";
 
